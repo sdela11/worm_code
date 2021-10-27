@@ -7,29 +7,68 @@ library(tidyverse)
 library(glue)
 library(stringr)
 library(magrittr)
+library(dplyr)
 
 pwd()
 getwd()
 
 #No NA values for data entries, but there are UNK for some of the ID values. Will need to remove those.
 
-#First need to summarize sums by replicate, then take the mean of the group.
-#Created summarized df, divided biomass totals by the worm ring area to get the biomass totals for each rep.
 
 worms <- read.csv("ItascaEarthwormData_2019.csv")
 head(worms)
 view(worms)
 
-worm_rep_sum1 <- 
+#Add column for invasion level, then column for forest type. Overwrite csv and check.
+
+worms <- worms %>% 
+  mutate(inv_lvl = case_when(
+    grepl("2", treatment) ~ "2",
+    grepl("5", treatment) ~ "5"
+  ), .after = "site_name") 
+
+worms <- worms %>% 
+  mutate(forest_type = case_when(
+    grepl("C", treatment) ~ "C",
+    grepl("D", treatment) ~ "D"), .after = "inv_lvl"
+  )
+
+view(worms)
+
+write_csv(worms, "ItascaEarthwormdata_2019.csv")
+
+check <- read.csv("ItascaEarthwormdata_2019.csv")
+view(check)
+
+
+#First need to summarize sums by replicate, then take the mean of the group.
+#Created summarized df, divided biomass totals by the worm ring area to get the biomass totals for each rep.
+
+worm_rep_sum <- 
   worms %>% 
   group_by(treatment, rep) %>% 
   summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
 
-worm_rep_sum1 %<>% 
+worm_rep_sum %<>% 
   mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
-view(worm_rep_sum1)  
+view(worm_rep_sum)  
 
+#redo creation of invasion level and forest type columns (post-summarize)
+
+worm_rep_sum <- worm_rep_sum %>% 
+  mutate(inv_lvl = case_when(
+    grepl("2", treatment) ~ "2",
+    grepl("5", treatment) ~ "5"
+  ), .after = "treatment") 
+
+worm_rep_sum <- worm_rep_sum %>% 
+  mutate(forest_type = case_when(
+    grepl("C", treatment) ~ "C",
+    grepl("D", treatment) ~ "D"), .after = "treatment"
+  )
+
+view(worm_rep_sum)
 
 #Attempt to select one worm group from the original worms dataframe.
 Aporr <- worms[worms$species == "Aporrectodea species",]
@@ -44,7 +83,7 @@ dev.off()
 
 #making our own summarySE function:
 
-wormplot.df <- worms %>% group_by(treatment) %>% 
+wormplot.df <- worm_rep_sum %>% group_by(treatment) %>% 
   summarise(mean = mean(biomass_m2), SD = sd(biomass_m2))
 print(wormplot.df)
 
@@ -76,11 +115,24 @@ wormplot.FUN(wormplot.df) #run the function
 
 print(Wplot1)
 
-fm1 <- lm(biomass_m2 ~ treatment, data = worms)
+#anova comparing the 8 treatment groups:
+fm1 <- lm(biomass_m2 ~ treatment, data = worm_rep_sum)
 anova(fm1)
 summary(fm1)
 
-view(worms)
+view(worm_rep_sum)
+
+#anova comparing the 2 forest types:
+fm2 <- lm(biomass_m2 ~ forest_type, data = worm_rep_sum)
+anova(fm2)
+summary(fm2)
+
+#anova comparing the 2 invasion levels:
+fm3 <- lm(biomass_m2 ~ inv_lvl, data = worm_rep_sum)
+anova(fm3)
+summary(fm3)
+
+
 
 #plotting residuals to check for equal variance
 plot(residuals(fm1) ∼ fitted.values(fm1), main = "fm1 residuals: biomass_m2 ~ Site")
