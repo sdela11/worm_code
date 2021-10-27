@@ -101,9 +101,9 @@ wormplot.FUN <- function(data){
                 position = position_dodge(.9))
   Wplot <- Wplot + ggtitle("Itasca 2019 Worms") +
     theme(axis.text.x = element_text(size = rel(1.2))) +
-    theme(axis.text.y = element_text(size = rel(1.2))) +
+    theme(axis.text.y = element_text(size = rel(1.2))) 
   
-  print(Wplot) #print
+ # print(Wplot) #print
   }
 
 
