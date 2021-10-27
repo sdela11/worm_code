@@ -9,7 +9,7 @@ library(stringr)
 library(magrittr)
 library(dplyr)
 
-pwd()
+
 getwd()
 
 #No NA values for data entries, but there are UNK for some of the ID values. Will need to remove those.
