@@ -6,17 +6,36 @@
 library(tidyverse)
 library(glue)
 library(stringr)
+library(magrittr)
 
-  
+pwd()
+getwd()
+
 #No NA values for data entries, but there are UNK for some of the ID values. Will need to remove those.
-  
+
+#First need to summarize sums by replicate, then take the mean of the group.
+#Created summarized df, divided biomass totals by the worm ring area to get the biomass totals for each rep.
+
 worms <- read.csv("ItascaEarthwormData_2019.csv")
 head(worms)
 view(worms)
 
+worm_rep_sum1 <- 
+  worms %>% 
+  group_by(treatment, rep) %>% 
+  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
+
+worm_rep_sum1 %<>% 
+  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
+
+view(worm_rep_sum1)  
+
+
+#Attempt to select one worm group from the original worms dataframe.
 Aporr <- worms[worms$species == "Aporrectodea species",]
 view(Aporr)
 
+#Worm scatterplot, checking trends and relationships.
 png("worm_scatter.png", width = 1000, height = 1000)
 worm_scatter <- plot(worms, cex = 2, cex.lab = 2)
 print(worm_scatter)
