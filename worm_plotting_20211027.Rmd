@@ -106,7 +106,7 @@ wormplot.df <- wormplot.df %>%   #Adding in SE to the dataframe
 print(wormplot.df)
 ```
 
-Error bars represent standard error of the mean
+Create bar graph comparing biomass_m2 at each site. Error bars represent standard error of the mean
 
 ```{r }
 wormplot.FUN <- function(data){
@@ -210,6 +210,6 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
 }
 
 ?ddply
-args(mutate)
+
 ```
 
