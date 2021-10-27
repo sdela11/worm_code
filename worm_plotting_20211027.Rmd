@@ -22,7 +22,7 @@ head(worms)
 view(worms)
 ```
 
-Add column for invasion level, then column for forest type. Overwrite csv and check.
+Add columns for invasion level and forest type. Relocate columns. Overwrite csv and check.
 
 ```{r }
 worms <- worms %>% 
@@ -33,8 +33,8 @@ worms <- worms %>%
     grepl("C", treatment) ~ "C",
     grepl("D", treatment) ~ "D")) 
 
-#view(worms)
-
+worms %<>% 
+  relocate(c("forest_type", "inv_lvl"), .after = "site_name")
 write_csv(worms, "ItascaEarthwormdata_2019.csv")
 
 check <- read.csv("ItascaEarthwormdata_2019.csv")
