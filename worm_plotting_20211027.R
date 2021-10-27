@@ -110,11 +110,6 @@ wormplot.FUN <- function(data){
 wormplot.FUN(wormplot.df) #run the function
 
 
-
- 
-
-print(Wplot1)
-
 #anova comparing the 8 treatment groups:
 fm1 <- lm(biomass_m2 ~ treatment, data = worm_rep_sum)
 anova(fm1)
