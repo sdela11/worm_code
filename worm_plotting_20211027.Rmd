@@ -1,7 +1,7 @@
 #Worm plotting
-#06/02/2021
+#10/27/2021
 #Sara DeLaurentis
-#create summarized worm data
+#create summarized worm data, plot, perform ANOVAs
 
 ```{r }
 library(tidyverse)
