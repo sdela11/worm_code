@@ -97,16 +97,12 @@ making our own summarySE function:
 ```{r }
 wormplot.df <- worm_rep_sum %>% group_by(treatment) %>% 
   summarise(mean = mean(biomass_m2), SD = sd(biomass_m2))
-print(wormplot.df)
-```
 
-
-
-```{r }
-wormplot.df <- wormplot.df %>%   #Adding in SE to the dataframe  
+wormplot.df %<>%   #Adding in SE to the dataframe  
 mutate(SE = SD/sqrt(length(SD)))
 print(wormplot.df)
 ```
+
 
 Create bar graph comparing biomass_m2 at each site. Error bars represent standard error of the mean
 
@@ -122,10 +118,13 @@ wormplot.FUN <- function(data){
     theme(axis.text.y = element_text(size = rel(1.2))) 
   
  print(Wplot) #print
-  }
+}
+
+wormplot.FUN(wormplot.df) #run the function
+
 ```
 
-wormplot.FUN(wormplot.df) run the function
+
 anova comparing the 8 treatment groups:
 
 ```{r }
