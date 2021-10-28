@@ -13,7 +13,7 @@ library(wesanderson)
 library(viridis)
 library(ggplot2)
 
-install.packages("viridis")
+#install.packages("viridis")
 
 #install.packages("wesanderson")
 
@@ -78,7 +78,9 @@ Created summarized df, divided biomass totals by the worm ring area to get the b
 worm_rep_sum <- 
   worms %>% 
   group_by(site, rep) %>% 
-  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
+  mutate(biomass_AFDg_TOT = sum(biomass_AFDg)) %>% 
+  ungroup() %>% 
+  distinct(biomass_AFDg_TOT, .keep_all = TRUE)
 
 worm_rep_sum %<>% 
   mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
@@ -89,6 +91,14 @@ view(worm_rep_sum)
 redo creation of invasion level and forest type columns (post-summarize)
 
 ```{r }
+
+iris %>% 
+  group_by(Species) %>% 
+  mutate(max_score = max(Sepal.Length)) %>% 
+  ungroup() %>% 
+  filter(Sepal.Length==max_score)
+
+
 
 worm_rep_sum %<>%
 mutate(inv_lvl = case_when(
