@@ -100,10 +100,11 @@ wormplot.df <- worm_rep_sum %>% group_by(treatment) %>%
 print(wormplot.df)
 ```
 
-wormplot.df <- wormplot.df %>%   #Adding in SE to the dataframe
+
 
 ```{r }
-  mutate(SE = SD/sqrt(length(SD)))
+wormplot.df <- wormplot.df %>%   #Adding in SE to the dataframe  
+mutate(SE = SD/sqrt(length(SD)))
 print(wormplot.df)
 ```
 
