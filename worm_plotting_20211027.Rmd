@@ -35,6 +35,7 @@ worms <- worms %>%
 
 worms %<>% 
   relocate(c("forest_type", "inv_lvl"), .after = "site_name")
+view(worms)
 write_csv(worms, "ItascaEarthwormdata_2019.csv")
 
 check <- read.csv("ItascaEarthwormdata_2019.csv")
