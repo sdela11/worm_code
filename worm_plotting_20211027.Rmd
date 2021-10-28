@@ -80,7 +80,7 @@ worm_rep_sum <-
   group_by(site, rep) %>% 
   mutate(biomass_AFDg_TOT = sum(biomass_AFDg)) %>% 
   ungroup() %>% 
-  distinct(biomass_AFDg_TOT, .keep_all = TRUE)
+  distinct(site_name, .keep_all = TRUE)
 
 worm_rep_sum %<>% 
   mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
@@ -109,9 +109,12 @@ dev.off()
 making our own summarySE function:
 
 ```{r }
-wormplot.df <- worm_rep_sum %>% group_by(site) %>% 
-  summarise(mean = mean(biomass_m2), SD = sd(biomass_m2))
-
+wormplot.df <- worm_rep_sum %>% 
+group_by(site) %>% 
+  mutate(mean = mean(biomass_m2), SD = sd(biomass_m2)) %>% 
+  ungroup() %>% 
+  distinct(site, .keep_all = TRUE)
+view(wormplot.df)
 
 wormplot.df %<>%   #Adding in SE to the dataframe  
 mutate(SE = SD/sqrt(length(SD)))
