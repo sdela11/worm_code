@@ -27,11 +27,11 @@ Add columns for invasion level and forest type. Relocate columns. Overwrite csv 
 ```{r }
 worms <- worms %>% 
   mutate(inv_lvl = case_when(
-    grepl("2", treatment) ~ "2",
-    grepl("5", treatment) ~ "5"
+    grepl("2", site) ~ "2",
+    grepl("5", site) ~ "5"
   ), forest_type = case_when(
-    grepl("C", treatment) ~ "C",
-    grepl("D", treatment) ~ "D")) 
+    grepl("C", site) ~ "C",
+    grepl("D", site) ~ "D")) 
 
 worms %<>% 
   relocate(c("forest_type", "inv_lvl"), .after = "site_name")
@@ -45,6 +45,16 @@ Changing treatment column to "site" and creating a more accurately-named treatme
 colnames(worms)[6] <- "site"
 head(worms)
 
+worms %<>% mutate(treatment = case_when(
+    grepl("C2", site) ~ "C2",
+    grepl("C5", site) ~ "C5",
+    grepl("D2", site) ~ "D2",
+    grepl("D5", site) ~ "D5"
+  ))
+
+worms %<>%
+  relocate(c("treatment"), .after = site_name)
+view(worms)
 
 ```
 
@@ -75,11 +85,19 @@ redo creation of invasion level and forest type columns (post-summarize)
 
 worm_rep_sum %<>%
 mutate(inv_lvl = case_when(
-    grepl("2", treatment) ~ "2",
-    grepl("5", treatment) ~ "5"
+    grepl("2", site) ~ "2",
+    grepl("5", site) ~ "5"
   ), forest_type = case_when(
-    grepl("C", treatment) ~ "C",
-    grepl("D", treatment) ~ "D"))
+    grepl("C", site) ~ "C",
+    grepl("D", site) ~ "D"))
+
+worm_rep_sum %<>% 
+mutate(treatment = case_when(
+    grepl("C2", site) ~ "C2",
+    grepl("C5", site) ~ "C5",
+    grepl("D2", site) ~ "D2",
+    grepl("D5", site) ~ "D5"
+  ))
 
 view(worm_rep_sum)
 ```
@@ -104,7 +122,7 @@ dev.off()
 making our own summarySE function:
 
 ```{r }
-wormplot.df <- worm_rep_sum %>% group_by(treatment) %>% 
+wormplot.df <- worm_rep_sum %>% group_by(site) %>% 
   summarise(mean = mean(biomass_m2), SD = sd(biomass_m2))
 
 
@@ -113,11 +131,11 @@ mutate(SE = SD/sqrt(length(SD)))
 
 wormplot.df %<>% 
   mutate(inv_lvl = case_when(
-    grepl("2", treatment) ~ "2",
-    grepl("5", treatment) ~ "5"),
+    grepl("2", site) ~ "2",
+    grepl("5", site) ~ "5"),
     forest_type = case_when(
-    grepl("C", treatment) ~ "C",
-    grepl("D", treatment) ~ "D"))
+    grepl("C", site) ~ "C",
+    grepl("D", site) ~ "D"))
 
 print(wormplot.df)
 
@@ -129,7 +147,7 @@ Create bar graph comparing biomass_m2 at each site. Error bars represent standar
 
 ```{r }
 wormplot.FUN <- function(data){
-  Wplot <- ggplot(wormplot.df, aes(x = treatment, y = mean, fill = forest_type)) +
+  Wplot <- ggplot(wormplot.df, aes(x = site, y = mean, fill = forest_type)) +
   geom_col(position = position_dodge()) +
   geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
                 width = .2,
@@ -147,10 +165,10 @@ wormplot.FUN(wormplot.df) #run the function
 ```
 
 
-anova comparing the 8 treatment groups:
+anova comparing the 8 site groups:
 
 ```{r }
-fm1 <- lm(biomass_m2 ~ treatment, data = worm_rep_sum)
+fm1 <- lm(biomass_m2 ~ site, data = worm_rep_sum)
 anova(fm1)
 summary(fm1)
 
