@@ -169,7 +169,7 @@ wormplot.FUN <- function(data){
                 width = .2,
                 position = position_dodge(.9))
   Wplot <- Wplot + ggtitle("Itasca 2019 Worms") +
-    theme(plot.title = element_text(size = rel(1.8)))+
+    theme(plot.title = element_text(size = rel(1.8), margin = margin(b = 10)))+
     theme(axis.text.x = element_text(size = rel(1.4))) +
     theme(axis.text.y = element_text(size = rel(1.4))) 
   Wplot <- Wplot +
