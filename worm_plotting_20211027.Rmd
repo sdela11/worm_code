@@ -163,15 +163,23 @@ Create bar graph comparing biomass_m2 at each site. Error bars represent standar
 ```{r }
 wormplot.FUN <- function(data){
   Wplot <- ggplot(wormplot.df, aes(x = site, y = mean, fill = treatment)) +
-  scale_fill_viridis() +
+  scale_fill_viridis(discrete = TRUE) +
   geom_col(position = position_dodge()) +
   geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
                 width = .2,
                 position = position_dodge(.9))
   Wplot <- Wplot + ggtitle("Itasca 2019 Worms") +
-    theme(axis.text.x = element_text(size = rel(1.2))) +
-    theme(axis.text.y = element_text(size = rel(1.2))) +
-    labs(x= "Site", y = "EW biomass / sq m")
+    theme(plot.title = element_text(size = rel(1.8)))+
+    theme(axis.text.x = element_text(size = rel(1.4))) +
+    theme(axis.text.y = element_text(size = rel(1.4))) 
+  Wplot <- Wplot +
+    labs(x= "Site", y = "EW biomass (g/m2)", size = rel(1.8)) +
+    theme(axis.title.x = element_text(size = rel(1.6), face = "bold"))+
+    theme(axis.title.y = element_text(size = rel(1.6), face = "bold"))+
+    theme(legend.text = element_text(size = rel(1.4))) +
+    theme(legend.title = element_text(size = rel(1.4)))
+  
+  
   
  print(Wplot) #print
 }
