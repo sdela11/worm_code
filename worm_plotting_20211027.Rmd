@@ -9,6 +9,13 @@ library(glue)
 library(stringr)
 library(magrittr)
 library(dplyr)
+library(wesanderson)
+library(viridis)
+library(ggplot2)
+
+install.packages("viridis")
+
+#install.packages("wesanderson")
 
 
 getwd()
@@ -70,7 +77,7 @@ Created summarized df, divided biomass totals by the worm ring area to get the b
 ```{r }
 worm_rep_sum <- 
   worms %>% 
-  group_by(treatment, rep) %>% 
+  group_by(site, rep) %>% 
   summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
 
 worm_rep_sum %<>% 
@@ -136,6 +143,14 @@ wormplot.df %<>%
     forest_type = case_when(
     grepl("C", site) ~ "C",
     grepl("D", site) ~ "D"))
+    
+wormplot.df %<>%
+  mutate(treatment = case_when(
+    grepl("C2", site) ~ "C2",
+    grepl("C5", site) ~ "C5",
+    grepl("D2", site) ~ "D2",
+    grepl("D5", site) ~ "D5"
+  ))
 
 print(wormplot.df)
 
@@ -147,7 +162,8 @@ Create bar graph comparing biomass_m2 at each site. Error bars represent standar
 
 ```{r }
 wormplot.FUN <- function(data){
-  Wplot <- ggplot(wormplot.df, aes(x = site, y = mean, fill = forest_type)) +
+  Wplot <- ggplot(wormplot.df, aes(x = site, y = mean, fill = treatment)) +
+  scale_fill_viridis() +
   geom_col(position = position_dodge()) +
   geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
                 width = .2,
