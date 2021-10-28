@@ -88,36 +88,6 @@ worm_rep_sum %<>%
 view(worm_rep_sum)  
 ```
 
-redo creation of invasion level and forest type columns (post-summarize)
-
-```{r }
-
-iris %>% 
-  group_by(Species) %>% 
-  mutate(max_score = max(Sepal.Length)) %>% 
-  ungroup() %>% 
-  filter(Sepal.Length==max_score)
-
-
-
-worm_rep_sum %<>%
-mutate(inv_lvl = case_when(
-    grepl("2", site) ~ "2",
-    grepl("5", site) ~ "5"
-  ), forest_type = case_when(
-    grepl("C", site) ~ "C",
-    grepl("D", site) ~ "D"))
-
-worm_rep_sum %<>% 
-mutate(treatment = case_when(
-    grepl("C2", site) ~ "C2",
-    grepl("C5", site) ~ "C5",
-    grepl("D2", site) ~ "D2",
-    grepl("D5", site) ~ "D5"
-  ))
-
-view(worm_rep_sum)
-```
 
 Attempt to select one worm group from the original worms dataframe.
 
