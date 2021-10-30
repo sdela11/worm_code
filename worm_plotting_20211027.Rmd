@@ -184,6 +184,19 @@ fm4 <- lm(biomass_m2 ~ treatment, data = worm_rep_sum)
 anova(fm4)
 summary(fm4)
 ```
+
+ANOVA: biomass as a function of invasion level and forest type.
+```{r }
+fm5 <- lm(biomass_m2 ~ inv_lvl + forest_type, data = worm_rep_sum)
+anova(fm5)
+summary(fm5)
+```
+ANOVA: biomass as a function of invasion level and forest type, order switched.
+```{r }
+fm6 <- lm(biomass_m2 ~ forest_type + inv_lvl, data = worm_rep_sum)
+anova(fm6)
+summary(fm6)
+```
 plotting residuals to check for equal variance
 
 ```{r }
