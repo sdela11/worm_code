@@ -118,6 +118,7 @@ view(wormplot.df)
 
 print(wormplot.df)
 
+write.csv(wormplot.df, "wormplot.df.csv")
 
 ```
 
@@ -186,14 +187,17 @@ summary(fm4)
 ```
 
 ANOVA: biomass as a function of invasion level and forest type.
+
 ```{r }
-fm5 <- lm(biomass_m2 ~ inv_lvl + forest_type, data = worm_rep_sum)
+fm5 <- lm(biomass_m2 ~ inv_lvl * forest_type, data = worm_rep_sum)
 anova(fm5)
 summary(fm5)
 ```
+
 ANOVA: biomass as a function of invasion level and forest type, order switched.
+
 ```{r }
-fm6 <- lm(biomass_m2 ~ forest_type + inv_lvl, data = worm_rep_sum)
+fm6 <- lm(biomass_m2 ~ forest_type * inv_lvl, data = worm_rep_sum)
 anova(fm6)
 summary(fm6)
 ```
