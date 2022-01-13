@@ -20,6 +20,7 @@ library(ggplot2)
 
 
 getwd()
+
 ```
 
 No NA values for data entries, but there are UNK for some of the ID values. Will need to remove those.
@@ -44,7 +45,10 @@ worms %<>%
   relocate(c("forest_type", "inv_lvl"), .after = "site_name")
 view(worms)
 
-worms$inv_lvl <- stri_sub(worms$site), )
+#Possible new way to add the inv_lvl and forest_type columns. It takes the specified elements and creates a new column.
+
+#worms$inv_lvl <- stri_sub((worms$site), from = 2, length = 1)
+#worms$forest_type <- stri_sub((worms$site), from = 1, length = 1)
 
 #Changing treatment column to "site" and creating a more accurately-named treatment column
 
@@ -72,22 +76,37 @@ First need to summarize sums by replicate, then take the mean of the group.
 Created summarized df, divided biomass totals by the worm ring area to get the biomass totals for each rep.
 
 ```{r }
+setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 worms <- read.csv("ItascaEarthwormData_2019.csv")
 
-worm_rep_sum <- 
-  worms %>% 
-  group_by(site, rep) %>% 
-  mutate(biomass_AFDg_TOT = sum(biomass_AFDg)) %>% 
-  ungroup() %>% 
-  distinct(site_name, .keep_all = TRUE)
+#worm_rep_sum <- 
+#  worms %>% 
+ # group_by(site, rep) %>% 
+ # mutate(biomass_AFDg_TOT = sum(biomass_AFDg)) %>% 
+ # ungroup() %>% 
+ # distinct(site_name, .keep_all = TRUE)
+  
+#worm_rep_sum %<>% 
+ # mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
-worm_rep_sum %<>% 
+#worm_rep_sum$inv_lvl %<>% as.character()
+#str(worm_rep_sum)
+#view(worm_rep_sum)  
+
+#For ecogroup plot:
+worm_rep_ecogrp <- worms %>% 
+  group_by(site, ecol_group) %>% 
+  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
+   
+worm_rep_ecogrp %<>% 
   mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
-worm_rep_sum$inv_lvl %<>% as.character()
-str(worm_rep_sum)
-view(worm_rep_sum)  
+worm_rep_ecogrp$inv_lvl %<>% as.character()
+str(worm_rep_ecogrp)
+view(worm_rep_ecogrp) 
+
+
 ```
 
 
