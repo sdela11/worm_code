@@ -7,6 +7,7 @@
 library(tidyverse)
 library(glue)
 library(stringr)
+library(stringi)
 library(magrittr)
 library(dplyr)
 library(wesanderson)
@@ -42,6 +43,8 @@ worms <- worms %>%
 worms %<>% 
   relocate(c("forest_type", "inv_lvl"), .after = "site_name")
 view(worms)
+
+worms$inv_lvl <- stri_sub(worms$site), )
 
 #Changing treatment column to "site" and creating a more accurately-named treatment column
 
