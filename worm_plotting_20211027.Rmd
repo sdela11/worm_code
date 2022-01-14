@@ -115,6 +115,10 @@ worm_rep_ecogrp <- worms %>%
 worm_rep_ecogrp %<>% 
   mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
+worm_rep_ecogrp %<>%
+  group_by(site, ecol_group) %>% 
+  summarise(biomass_eco_m2 = mean(biomass_m2))
+
 #worm_rep_ecogrp$inv_lvl %<>% as.character()
 #class(worm_rep_ecogrp$inv_lvl)
 
@@ -218,11 +222,12 @@ wormplot.FUN(wormplot.df) #run the function
 
 ```
 #Plotting the MEAN biomass of ecological groups at each site. No error bars because that would be messy.
+
 ```{r }
 
 
 wormplot.FUN <- function(data){
-  Wplot <- ggplot(wormplot.df, aes(x = site, y = biomass_m2, fill = ecol_group)) +
+  Wplot <- ggplot(wormplot.df, aes(x = site, y = biomass_eco_m2, fill = ecol_group)) +
   scale_fill_manual(values = wes_palette("Darjeeling1", n = 4)) +
   geom_col(position = "stack") 
   #geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
