@@ -45,7 +45,7 @@ worms %<>%
   relocate(c("forest_type", "inv_lvl"), .after = "site_name")
 view(worms)
 
-#Possible new way to add the inv_lvl and forest_type columns. It takes the specified elements and creates a new column.
+#Possible new way to add the inv_lvl and forest_type columns (if need to re-create sheet). It takes the specified string elements and creates a new column.
 
 #worms$inv_lvl <- stri_sub((worms$site), from = 2, length = 1)
 #worms$forest_type <- stri_sub((worms$site), from = 1, length = 1)
@@ -94,7 +94,7 @@ worms <- read.csv("ItascaEarthwormData_2019.csv")
 #str(worm_rep_sum)
 #view(worm_rep_sum)  
 
-#For ecogroup plot:
+#For ecogroup plot (total):
 worm_rep_ecogrp <- worms %>% 
   group_by(site, ecol_group) %>% 
   summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
@@ -105,6 +105,22 @@ worm_rep_ecogrp %<>%
 worm_rep_ecogrp$inv_lvl %<>% as.character()
 str(worm_rep_ecogrp)
 view(worm_rep_ecogrp) 
+
+
+#For ecogroup plot (site mean):
+worm_rep_ecogrp <- worms %>% 
+  group_by(site, rep, ecol_group) %>% 
+  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
+   
+worm_rep_ecogrp %<>% 
+  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
+
+#worm_rep_ecogrp$inv_lvl %<>% as.character()
+#class(worm_rep_ecogrp$inv_lvl)
+
+str(worm_rep_ecogrp)
+view(worm_rep_ecogrp) 
+
 
 
 ```
@@ -173,7 +189,7 @@ wormplot.FUN(wormplot.df) #run the function
 
 ```
 
-#Plots earthworm ecol groups stacked on top of each other.
+#Plots TOTAL biomass of earthworm ecol groups, per site, Stacked on top of each other.
 ```{r }
 
 wormplot.FUN <- function(data){
@@ -201,6 +217,35 @@ wormplot.df <- worm_rep_ecogrp
 wormplot.FUN(wormplot.df) #run the function
 
 ```
+#Plotting the MEAN biomass of ecological groups at each site. No error bars because that would be messy.
+```{r }
+
+
+wormplot.FUN <- function(data){
+  Wplot <- ggplot(wormplot.df, aes(x = site, y = biomass_m2, fill = ecol_group)) +
+  scale_fill_manual(values = wes_palette("Darjeeling1", n = 4)) +
+  geom_col(position = "stack") 
+  #geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
+ #               width = .2,
+  #              position = position_dodge(.9))
+  Wplot <- Wplot + ggtitle("Itasca 2019 Worms") +
+    theme(plot.title = element_text(size = rel(1.8), margin = margin(b = 10)))+
+    theme(axis.text.x = element_text(size = rel(1.4))) +
+    theme(axis.text.y = element_text(size = rel(1.4))) 
+  Wplot <- Wplot +
+    labs(x= "Site", y = "EW biomass (g/m2)", size = rel(1.8)) +
+    theme(axis.title.x = element_text(size = rel(1.5), face = "bold", margin = margin(t = 8)))+
+    theme(axis.title.y = element_text(size = rel(1.5), face = "bold", margin = margin(r = 8)))+
+    theme(legend.text = element_text(size = rel(1.4))) +
+    theme(legend.title = element_text(size = rel(1.4)))
+  
+ print(Wplot) #print
+}
+
+wormplot.df <- worm_rep_ecogrp
+wormplot.FUN(wormplot.df) #run the function
+```
+
 
 
 anova comparing the 8 site groups:
