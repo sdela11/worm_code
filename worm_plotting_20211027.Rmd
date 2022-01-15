@@ -80,19 +80,19 @@ setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 worms <- read.csv("ItascaEarthwormData_2019.csv")
 
-#worm_rep_sum <- 
-#  worms %>% 
- # group_by(site, rep) %>% 
- # mutate(biomass_AFDg_TOT = sum(biomass_AFDg)) %>% 
- # ungroup() %>% 
- # distinct(site_name, .keep_all = TRUE)
+worm_rep_sum <- 
+ worms %>% 
+ group_by(site, rep) %>% 
+ mutate(biomass_AFDg_TOT = sum(biomass_AFDg)) %>% 
+ ungroup() %>% 
+ distinct(site_name, .keep_all = TRUE)
   
-#worm_rep_sum %<>% 
- # mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
+worm_rep_sum %<>% 
+  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
-#worm_rep_sum$inv_lvl %<>% as.character()
-#str(worm_rep_sum)
-#view(worm_rep_sum)  
+worm_rep_sum$inv_lvl %<>% as.character()
+str(worm_rep_sum)
+view(worm_rep_sum)  
 
 #For ecogroup plot (total):
 worm_rep_ecogrp <- worms %>% 
@@ -104,7 +104,7 @@ worm_rep_ecogrp %<>%
 
 worm_rep_ecogrp$inv_lvl %<>% as.character()
 str(worm_rep_ecogrp)
-view(worm_rep_ecogrp) 
+view(worm_rep_ecogrp)
 
 
 #For ecogroup plot (site mean):
@@ -147,29 +147,13 @@ dev.off()
 ?plot
 ```
 
-making our own summarySE function:
-
-```{r }
-wormplot.df <- worm_rep_sum %>% 
-group_by(site) %>% 
-  mutate(mean = mean(biomass_m2), SD = sd(biomass_m2)) %>% 
-  ungroup() %>% 
-  mutate(SE = SD/(sqrt(length(SD)))) %>% 
-  distinct(site, .keep_all = TRUE)
-view(wormplot.df)
-
-print(wormplot.df)
-
-write.csv(wormplot.df, "wormplot.df.csv")
-
-```
 
 
 Create bar graph comparing biomass_m2 at each site. Error bars represent standard error of the mean
 
 ```{r }
 wormplot.FUN <- function(data){
-  Wplot <- ggplot(wormplot.df, aes(x = site, y = mean, fill = treatment)) +
+  Wplot <- ggplot(wormplot.stat, aes(x = site, y = mean, fill = treatment)) +
   scale_fill_viridis(discrete = TRUE) +
   geom_col(position = position_dodge()) +
   geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
@@ -189,7 +173,30 @@ wormplot.FUN <- function(data){
  print(Wplot) #print
 }
 
-wormplot.FUN(wormplot.df) #run the function
+#MAKING OUR INPUTS 
+#1. wormplot.stat
+
+wormplot.stat <- worm_rep_sum %>% 
+group_by(site) %>% 
+  mutate(mean = mean(biomass_m2), SD = sd(biomass_m2)) %>% 
+  ungroup() %>% 
+  mutate(SE = SD/(sqrt(length(SD)))) %>% 
+  distinct(site, .keep_all = TRUE)
+view(wormplot.stat)
+
+print(wormplot.stat)
+
+write.csv(wormplot.stat, "wormplot.stat.csv")
+
+
+##Run the function
+
+wormplot.FUN(wormplot.df) 
+
+```
+
+
+
 
 ```
 
