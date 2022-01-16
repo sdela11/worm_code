@@ -3,6 +3,8 @@ title: "worm plotting total site biomass"
 author: "Sara DeLaurentis"
 date: "1/15/2022"
 output: html_document
+purpose: create summarized worm data, take mean biomass of 3 reps at each site, calculate SD and SE, plot
+related files: worm_plotting_20211027.Rmd
 ---
 
 ```{r setup, include=FALSE}
