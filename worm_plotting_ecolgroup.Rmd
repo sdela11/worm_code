@@ -3,6 +3,7 @@ title: "worm_plot_ecolgrp_by_site"
 author: "Sara DeLaurentis"
 date: "1/15/2022"
 output: html_document
+related files: worm_plotting_20211027.Rmd, worm_plotting_mean_site_biomass.Rmd
 ---
 
 ```{r setup, include=FALSE}
@@ -49,7 +50,7 @@ view(worm_rep_ecogrp)
 ```
 
 
-```{r 
+```{r }
 #For ecogroup plot (site mean):
 
 worm_rep_ecogrp <- worms %>% 
@@ -101,3 +102,5 @@ wormplot.FUN <- function(data){
 
 wormplot.df <- worm_rep_ecogrp
 wormplot.FUN(wormplot.df) #run the function
+
+```
