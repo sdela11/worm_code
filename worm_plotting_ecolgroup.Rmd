@@ -34,9 +34,7 @@ setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 worms <- read.csv("ItascaEarthwormData_2019.csv")
 
-```
 
-```{r }
 #For ecogroup plot (total):
 worm_rep_ecogrp <- worms %>% 
   group_by(site, ecol_group) %>% 
@@ -45,13 +43,13 @@ worm_rep_ecogrp <- worms %>%
 worm_rep_ecogrp %<>% 
   mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
-worm_rep_ecogrp$inv_lvl %<>% as.character()
+#worm_rep_ecogrp$inv_lvl %<>% as.character()
 str(worm_rep_ecogrp)
 view(worm_rep_ecogrp)
 ```
 
 
-```{r } 
+```{r 
 #For ecogroup plot (site mean):
 
 worm_rep_ecogrp <- worms %>% 
