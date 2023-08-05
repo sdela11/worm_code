@@ -62,7 +62,7 @@ view(worms)
 
 worm_rep_sum <- 
   worms %>% 
-  group_by(treatment, rep) %>% 
+  group_by(site, rep) %>% 
   summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
 
 worm_rep_sum %<>% 
