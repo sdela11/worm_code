@@ -15,25 +15,26 @@ getwd()
 #No NA values for data entries, but there are UNK for some of the ID values. Will need to remove those.
 
 
-worms <- read.csv("ItascaEarthwormData_2019.csv")
+#worms <- read.csv("ItascaEarthwormData_2019.csv")
+worms <- read.csv("Itasca_worms_2021.csv")
 head(worms)
 view(worms)
 
 #Add column for invasion level, then column for forest type. Overwrite csv and check.
 
-worms <- worms %>% 
-  mutate(inv_lvl = case_when(
-    grepl("2", treatment) ~ "2",
-    grepl("5", treatment) ~ "5"
-  ), .after = "site_name") 
+#worms <- worms %>% 
+#  mutate(inv_lvl = case_when(
+#    grepl("2", treatment) ~ "2",
+#    grepl("5", treatment) ~ "5"
+#  ), .after = "site_name") 
 
-worms <- worms %>% 
-  mutate(forest_type = case_when(
-    grepl("C", treatment) ~ "C",
-    grepl("D", treatment) ~ "D"), .after = "inv_lvl"
-  )
+#worms <- worms %>% 
+#  mutate(forest_type = case_when(
+#    grepl("C", treatment) ~ "C",
+#    grepl("D", treatment) ~ "D"), .after = "inv_lvl"
+#  )
 
-view(worms)
+#view(worms)
 
 write_csv(worms, "ItascaEarthwormdata_2019.csv")
 
