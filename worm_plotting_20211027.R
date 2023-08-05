@@ -16,7 +16,7 @@ getwd()
 
 
 #worms <- read.csv("ItascaEarthwormData_2019.csv")
-worms <- read.csv("Itasca_worms_2021.csv")
+worms <- read.csv("../Itasca_worms_2021.csv")
 head(worms)
 view(worms)
 
@@ -36,11 +36,26 @@ view(worms)
 
 #view(worms)
 
-write_csv(worms, "ItascaEarthwormdata_2019.csv")
+#write_csv(worms, "ItascaEarthwormdata_2019.csv")
 
-check <- read.csv("ItascaEarthwormdata_2019.csv")
-view(check)
+#check <- read.csv("ItascaEarthwormdata_2019.csv")
+#view(check)
 
+worms <- worms %>% 
+  mutate(rep = case_when(
+    grepl("W1", site_name) ~ "W1",
+    grepl("W2", site_name) ~ "W2",
+    grepl("W3", site_name) ~ "W3"), .after = "site"
+  )
+
+worms <- worms %>% 
+  mutate(layer = case_when(
+    grepl("min", site_name) ~ "min",
+    grepl("mus", site_name) ~ "min",
+    grepl("min", site_name) ~ "org",), .after = "rep"
+  )
+
+view(worms)
 
 #First need to summarize sums by replicate, then take the mean of the group.
 #Created summarized df, divided biomass totals by the worm ring area to get the biomass totals for each rep.
