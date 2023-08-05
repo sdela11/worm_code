@@ -52,7 +52,7 @@ worms <- worms %>%
   mutate(layer = case_when(
     grepl("min", site_name) ~ "min",
     grepl("mus", site_name) ~ "min",
-    grepl("min", site_name) ~ "org",), .after = "rep"
+    grepl("org", site_name) ~ "org",), .after = "rep"
   )
 
 view(worms)
