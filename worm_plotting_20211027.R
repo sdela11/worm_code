@@ -68,7 +68,17 @@ worm_rep_sum <-
 worm_rep_sum %<>% 
   mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
-view(worm_rep_sum)  
+view(worm_rep_sum)
+
+#create df to merge all desired site/rep combinations
+siterep.df <- matrix(data = NA, nrow = 21, ncol = 2)
+siterep.df[,1] <- c(rep("C2A", 3), rep("C2B", 3), rep("C5A", 3), rep("C5B", 3), 
+                rep("D2A", 3), rep("D2B", 3), rep("D5A", 3))
+siterep.df[,2] <- c("W1", "W2", "W3")
+colnames(siterep.df) <- c("site", "rep")
+siterep.df
+
+
 
 #redo creation of invasion level and forest type columns (post-summarize)
 
