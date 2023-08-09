@@ -31,9 +31,9 @@ getwd()
 
 ##Temporarily set working directory to one folder back, import data from csv, summarize by site and ecol_group.
 ```{r }
-setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
+#setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
-worms <- read.csv("ItascaEarthwormData_2019.csv")
+worms <- read.csv("../ItascaEarthwormData_2019.csv")
 
 
 #For ecogroup plot (total):
