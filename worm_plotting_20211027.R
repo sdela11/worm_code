@@ -84,9 +84,10 @@ siterep.df[,2] <- c("W1", "W2", "W3")
 colnames(siterep.df) <- c("site", "rep")
 siterep.df
 
-worm_rep_summary <- merge(x = siterep.df, y = worm_rep_sum, all.x = TRUE)
-worm_rep_summary
+worm_rep_summary <- merge(x = siterep.df, y = worm_rep_sum, all.x = TRUE) # merge expected values df with collected data.
+worm_rep_summary[is.na(worm_rep_summary)] <- 0 # replace NA values with 0
 
+worm_rep_summary
 
 #redo creation of invasion level and forest type columns (post-summarize)
 
