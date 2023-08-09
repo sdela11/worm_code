@@ -57,11 +57,17 @@ worms <- worms %>%
 
 view(worms)
 
+#Need to select only organic horizon and mustard-extracted.
+
+worms.org.musEX <- worms %>% 
+  filter((grepl("org", site_name)) | (grepl("musEx", site_name)))
+
+worms.org.musEX
 #First need to summarize sums by replicate, then take the mean of the group.
 #Created summarized df, divided biomass totals by the worm ring area to get the biomass totals for each rep.
 
 worm_rep_sum <- 
-  worms %>% 
+  worms.org.musEX %>% 
   group_by(site, rep) %>% 
   summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
 
