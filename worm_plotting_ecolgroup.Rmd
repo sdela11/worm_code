@@ -73,6 +73,20 @@ str(worm_rep_ecogrp)
 view(worm_rep_ecogrp) 
 
 
+#create df to merge all desired site/rep combinations
+worm.R.ecogroup.df <- matrix(data = NA, nrow = 32, ncol = 2)
+worm.R.ecogroup.df[,1] <- c(rep("C2A", 4), rep("C2B", 4), rep("C5A", 4), rep("C5B", 4), 
+                rep("D2A", 4), rep("D2B", 4), rep("D5A", 4), rep("D5B", 4))
+worm.R.ecogroup.df[,2] <- c("endogeic", "epi-endogeic", "epi-anecic", "epigeic")
+colnames(worm.R.ecogroup.df) <- c("site", "ecol_group")
+
+#worm.R.ecogroup.df
+
+worm_site_summary <- merge(x = worm.R.ecogroup.df, y = worm_rep_ecogrp, all.x = TRUE) # merge expected values df with collected data.
+worm_site_summary[is.na(worm_site_summary)] <- 0 # replace NA values with 0
+
+worm_site_summary
+
 ```
 
 #Plotting the MEAN biomass of ecological groups at each site. No error bars because that would be messy.
@@ -103,7 +117,7 @@ wormplot.FUN <- function(data){
 }
 
 #wormplot.df
-wormplot.df <- worm_rep_ecogrp
+wormplot.df <- worm_site_summary
 wormplot.FUN(wormplot.df) #run the function
 
 ```
