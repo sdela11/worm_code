@@ -138,11 +138,11 @@ wormplot.FUN <- function(data){
   geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
                 width = .2,
                 position = position_dodge(.9))
-  Wplot <- Wplot + ggtitle("Itasca 2019 Worms") +
+  Wplot <- Wplot + ggtitle("Itasca 2021 Worms") +
     theme(axis.text.x = element_text(size = rel(1.2))) +
     theme(axis.text.y = element_text(size = rel(1.2))) 
   
- # print(Wplot) #print
+  print(Wplot) #print
   }
 
 
