@@ -27,9 +27,10 @@ library(ggplot2)
 
 
 getwd()
+
 ```
 
-##Temporarily set working directory to one folder back, import data from csv, summarize by site and ecol_group.
+##Import data from csv, summarize by site and ecol_group.
 ```{r }
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
@@ -47,6 +48,7 @@ worm_rep_ecogrp %<>%
 #worm_rep_ecogrp$inv_lvl %<>% as.character()
 str(worm_rep_ecogrp)
 view(worm_rep_ecogrp)
+
 ```
 
 
@@ -62,8 +64,8 @@ worm_rep_ecogrp %<>%
 
 worm_rep_ecogrp %<>%
   group_by(site, ecol_group) %>% 
-  summarise(biomass_eco_m2 = mean(biomass_m2))
-
+  summarise(biomass_eco_m2 = mean(biomass_m2)) %>% 
+  ungroup()
 #worm_rep_ecogrp$inv_lvl %<>% as.character()
 #class(worm_rep_ecogrp$inv_lvl)
 
@@ -99,7 +101,7 @@ wormplot.FUN <- function(data){
   
  print(Wplot) #print
 }
-
+wormplot.df
 wormplot.df <- worm_rep_ecogrp
 wormplot.FUN(wormplot.df) #run the function
 
