@@ -91,16 +91,20 @@ worm_rep_summary
 #redo creation of invasion level and forest type columns (post-summarize)
 
 worm_rep_summary <- worm_rep_summary %>% 
+  mutate(treatment = substr(site, 1,2))
+
+worm_rep_summary <- worm_rep_summary %>% 
   mutate(inv_lvl = case_when(
-    grepl("2", treatment) ~ "2",
-    grepl("5", treatment) ~ "5"
+    grepl("2", site) ~ "2",
+    grepl("5", site) ~ "5"
   ), .after = "treatment") 
 
 worm_rep_summary <- worm_rep_summary %>% 
   mutate(forest_type = case_when(
-    grepl("C", treatment) ~ "C",
-    grepl("D", treatment) ~ "D"), .after = "treatment"
+    grepl("C", site) ~ "C",
+    grepl("D", site) ~ "D"), .after = "treatment"
   )
+
 
 view(worm_rep_summary)
 
