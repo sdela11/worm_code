@@ -34,7 +34,33 @@ getwd()
 ```{r }
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
-worms <- read.csv("../ItascaEarthwormData_2019.csv")
+worms <- read.csv("../Itasca_worms_2021.csv")
+worms
+
+## FOR 2021 WORMS ONLY ##
+
+worms <- worms %>% 
+  mutate(rep = case_when(
+    grepl("W1", site_name) ~ "W1",
+    grepl("W2", site_name) ~ "W2",
+    grepl("W3", site_name) ~ "W3"), .after = "site"
+  )
+
+worms <- worms %>% 
+  mutate(layer = case_when(
+    grepl("min", site_name) ~ "min",
+    grepl("mus", site_name) ~ "min",
+    grepl("org", site_name) ~ "org",), .after = "rep"
+  )
+
+view(worms)
+
+#Need to select only organic horizon and mustard-extracted.
+
+worms.org.musEX <- worms %>% 
+  filter((grepl("org", site_name)) | (grepl("musEx", site_name)))
+
+worms.org.musEX
 
 
 #For ecogroup plot (total):
@@ -101,7 +127,7 @@ wormplot.FUN <- function(data){
   #geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
  #               width = .2,
   #              position = position_dodge(.9))
-  Wplot <- Wplot + ggtitle("Itasca 2019 Worms", subtitle = "Mean biomass by site and ecologic group") +
+  Wplot <- Wplot + ggtitle("Itasca 2021 Worms", subtitle = "Mean biomass by site and ecologic group") +
     theme(plot.title = element_text(size = rel(1.8), margin = margin(b = 10)))+
     theme(axis.text.x = element_text(size = rel(1.4))) +
     theme(axis.text.y = element_text(size = rel(1.4))) 
