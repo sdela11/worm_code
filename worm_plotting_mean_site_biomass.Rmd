@@ -34,9 +34,10 @@ First need to summarize sums by replicate, then take the mean of the group.
 Created summarized df, divided biomass totals by the worm ring area to get the biomass totals for each rep.
 
 ```{r }
-setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
+#setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
-worms <- read.csv("ItascaEarthwormData_2019.csv")
+
+worms <- read.csv("../ItascaEarthwormData_2019.csv")
 
 worm_rep_sum <- 
  worms %>% 
