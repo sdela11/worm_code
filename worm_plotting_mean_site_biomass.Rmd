@@ -37,10 +37,50 @@ Created summarized df, divided biomass totals by the worm ring area to get the b
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 
-worms <- read.csv("../ItascaEarthwormData_2019.csv")
+#worms <- read.csv("../ItascaEarthwormData_2019.csv")
+worms <- read.csv("../Itasca_worms_2021.csv")
+
+```
+
+## FOR 2021 WORMS ONLY ##
+
+```{r}
+
+worms <- worms %>% 
+  mutate(rep = case_when(
+    grepl("W1", site_name) ~ "W1",
+    grepl("W2", site_name) ~ "W2",
+    grepl("W3", site_name) ~ "W3"), .after = "site"
+  )
+
+worms <- worms %>% 
+  mutate(layer = case_when(
+    grepl("min", site_name) ~ "min",
+    grepl("mus", site_name) ~ "min",
+    grepl("org", site_name) ~ "org",), .after = "rep"
+  )
+
+view(worms)
+
+#Need to select only organic horizon and mustard-extracted.
+
+worms.org.musEX <- worms %>% 
+  filter((grepl("org", site_name)) | (grepl("musEx", site_name)))
+
+worms.org.musEX
+
+```
+
+#For ecogroup plot (total):
+worm_rep_ecogrp <- worms %>% 
+  group_by(site, ecol_group) %>% 
+  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
+   
+worm_rep_ecogrp %<>% 
+  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
 
-worm_rep_sum <- 
+worm_rep_sum <-  
  worms %>% 
  group_by(site, rep) %>% 
  mutate(biomass_AFDg_TOT = sum(biomass_AFDg)) %>% 
