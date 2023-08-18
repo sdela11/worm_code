@@ -39,6 +39,7 @@ Created summarized df, divided biomass totals by the worm ring area to get the b
 
 worms <- read.csv("../ItascaEarthwormData_2019.csv")
 
+
 worm_rep_sum <- 
  worms %>% 
  group_by(site, rep) %>% 
@@ -88,6 +89,10 @@ group_by(site) %>%
   ungroup() %>% 
   mutate(SE = SD/(sqrt(length(SD)))) %>% 
   distinct(site, .keep_all = TRUE)
+
+keeps <- c("site","treatment", "forest_type", "biomass_m2", "mean", "SD", "SE")
+wormplot.stat = wormplot.stat[keeps]  
+
 view(wormplot.stat)
 
 print(wormplot.stat)
