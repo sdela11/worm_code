@@ -94,11 +94,12 @@ worm_rep_sum$inv_lvl %<>% as.character()
 str(worm_rep_sum)
 view(worm_rep_sum)  
 
-```
+#```
 
 Create bar graph comparing biomass_m2 at each site. Error bars represent standard error of the mean
 
 ```{r }
+
 wormplot.FUN <- function(data){
   Wplot <- ggplot(wormplot.stat, aes(x = site, y = mean, fill = treatment)) +
   scale_fill_viridis(discrete = TRUE) +
@@ -123,7 +124,7 @@ wormplot.FUN <- function(data){
 #MAKING OUR INPUTS 
 #1. wormplot.stat
 
-wormplot.stat <- worm_rep_sum %>% 
+wormplot.stat <- worms.org.musEX %>% 
 group_by(site) %>% 
   mutate(mean = mean(biomass_m2), SD = sd(biomass_m2)) %>% 
   ungroup() %>% 
@@ -142,6 +143,6 @@ write.csv(wormplot.stat, "wormplot.stat.csv")
 
 ##Run the function
 
-wormplot.FUN(wormplot.df) 
+wormplot.FUN(wormplot.stat) 
 
 ```
