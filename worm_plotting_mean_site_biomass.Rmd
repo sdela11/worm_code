@@ -98,7 +98,7 @@ worm_site_summary
 
 
 worm_rep_sum <-  
- worms %>% 
+ worms.org.musEX %>% 
  group_by(site, rep) %>% 
  mutate(biomass_AFDg_TOT = sum(biomass_AFDg)) %>% 
  ungroup() %>% 
