@@ -72,18 +72,6 @@ worms.org.musEX
 #summarize
 
 
-#create df to merge all desired site/rep combinations
-worm.R.df <- matrix(data = NA, nrow = 8, ncol = 1)
-worm.R.df[,1] <- c("C2A","C2B","C5A","C5B", "D2A", "D2B","D5A", "D5B")
-colnames(worm.R.df) <- c("site")
-
-#worm.R.ecogroup.df
-
-worm_site_summary <- merge(x = worm.R.df, y = worms.org.musEX, all.x = TRUE) # merge expected values df with collected data.
-worm_site_summary[is.na(worm_site_summary)] <- 0 # replace NA values with 0
-
-worm_site_summary
-
 ```
 
 ```{r }
@@ -111,6 +99,26 @@ worm_rep_sum$inv_lvl %<>% as.character()
 str(worm_rep_sum)
 view(worm_rep_sum)  
 
+#truncate unneeded columns
+
+keeps <- c("site", "rep", "biomass_m2")
+
+worm_rep_sum = worm_rep_sum[keeps]
+worm_rep_sum  
+
+#create df to merge all desired site/rep combinations
+worm.R.df <- matrix(data = NA, nrow = 24, ncol = 2)
+worm.R.df[,1] <- c(rep("C2A", 3), rep("C2B", 3), rep("C5A", 3), rep("C5B", 3), rep("D2A",3), rep("D2B", 3), rep("D5A", 3), rep("D5B", 3))
+worm.R.df[,2] <- c("W1", "W2", "W3")
+colnames(worm.R.df) <- c("site", "rep")
+
+worm.R.df
+#worm.R.ecogroup.df
+
+worm_site_summary <- merge(x = worm.R.df, y = worm_rep_sum, all.x = TRUE) # merge expected values df with collected data.
+worm_site_summary[is.na(worm_site_summary)] <- 0 # replace NA values with 0
+
+worm_site_summary
 
 
 ```
