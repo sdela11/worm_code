@@ -69,7 +69,22 @@ worms.org.musEX <- worms %>%
 
 worms.org.musEX
 
+
+#create df to merge all desired site/rep combinations
+worm.R.df <- matrix(data = NA, nrow = 8, ncol = 1)
+worm.R.df[,1] <- c("C2A","C2B","C5A","C5B", "D2A", "D2B","D5A", "D5B")
+colnames(worm.R.df) <- c("site")
+
+#worm.R.ecogroup.df
+
+worm_site_summary <- merge(x = worm.R.df, y = worms.org.musEX, all.x = TRUE) # merge expected values df with collected data.
+worm_site_summary[is.na(worm_site_summary)] <- 0 # replace NA values with 0
+
+worm_site_summary
+
 ```
+
+#```{r }
 
 #For ecogroup plot (total):
 worm_rep_ecogrp <- worms %>% 
@@ -98,7 +113,8 @@ view(worm_rep_sum)
 
 Create bar graph comparing biomass_m2 at each site. Error bars represent standard error of the mean
 
-```{r }
+```{r wormplot good}
+
 wormplot.FUN <- function(data){
   Wplot <- ggplot(wormplot.stat, aes(x = site, y = mean, fill = treatment)) +
   scale_fill_viridis(discrete = TRUE) +
@@ -106,7 +122,7 @@ wormplot.FUN <- function(data){
   geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
                 width = .2,
                 position = position_dodge(.9))
-  Wplot <- Wplot + ggtitle("Itasca 2019 Worms") +
+  Wplot <- Wplot + ggtitle("Itasca 2021 Worms") +
     theme(plot.title = element_text(size = rel(1.8), margin = margin(b = 10)))+
     theme(axis.text.x = element_text(size = rel(1.4))) +
     theme(axis.text.y = element_text(size = rel(1.4))) 
@@ -123,7 +139,7 @@ wormplot.FUN <- function(data){
 #MAKING OUR INPUTS 
 #1. wormplot.stat
 
-wormplot.stat <- worm_rep_sum %>% 
+wormplot.stat <- worm_site_summary %>% 
 group_by(site) %>% 
   mutate(mean = mean(biomass_m2), SD = sd(biomass_m2)) %>% 
   ungroup() %>% 
@@ -137,11 +153,11 @@ view(wormplot.stat)
 
 print(wormplot.stat)
 
-write.csv(wormplot.stat, "wormplot.stat.csv")
+write.csv(wormplot.stat, "wormplot.stat.2021.csv")
 
 
 ##Run the function
 
-wormplot.FUN(wormplot.df) 
+wormplot.FUN(wormplot.stat) 
 
 ```
