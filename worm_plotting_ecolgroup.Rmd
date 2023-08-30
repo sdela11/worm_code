@@ -31,13 +31,18 @@ getwd()
 ```
 
 ##Import data from csv, summarize by site and ecol_group.
+
 ```{r }
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 worms <- read.csv("../Itasca_worms_2021.csv")
 worms
 
+```
+
 ## FOR 2021 WORMS ONLY ##
+
+```{r }
 
 worms <- worms %>% 
   mutate(rep = case_when(
