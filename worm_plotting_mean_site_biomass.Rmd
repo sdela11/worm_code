@@ -69,6 +69,8 @@ worms.org.musEX <- worms %>%
 
 worms.org.musEX
 
+#summarize
+
 
 #create df to merge all desired site/rep combinations
 worm.R.df <- matrix(data = NA, nrow = 8, ncol = 1)
@@ -84,15 +86,15 @@ worm_site_summary
 
 ```
 
-#```{r }
+```{r }
 
 #For ecogroup plot (total):
-worm_rep_ecogrp <- worms %>% 
-  group_by(site, ecol_group) %>% 
-  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
+#worm_rep_ecogrp <- worms %>% 
+#  group_by(site, ecol_group) %>% 
+#  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
    
-worm_rep_ecogrp %<>% 
-  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
+#worm_rep_ecogrp %<>% 
+#  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
 
 worm_rep_sum <-  
@@ -102,14 +104,16 @@ worm_rep_sum <-
  ungroup() %>% 
  distinct(site_name, .keep_all = TRUE)
   
-worm_rep_sum %<>% 
-  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
+worm_rep_sum <- worm_rep_sum %>% 
+  rename("biomass_m2" = "biomass.AFDG.m2")
 
 worm_rep_sum$inv_lvl %<>% as.character()
 str(worm_rep_sum)
 view(worm_rep_sum)  
 
-#```
+
+
+```
 
 Create bar graph comparing biomass_m2 at each site. Error bars represent standard error of the mean
 
