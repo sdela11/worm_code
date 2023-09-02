@@ -88,12 +88,12 @@ worms.org.musEX
 worm_rep_sum <-  
  worms.org.musEX %>% 
  group_by(site, rep) %>% 
- mutate(biomass_AFDg_TOT = sum(biomass_AFDg)) %>% 
+ mutate(biomass_AFDg_TOT = sum(biomass.AFDG.m2)) %>% 
  ungroup() %>% 
  distinct(site_name, .keep_all = TRUE)
   
 worm_rep_sum <- worm_rep_sum %>% 
-  rename("biomass_m2" = "biomass.AFDG.m2")
+  rename("biomass_m2" = "biomass_AFDg_TOT")
 
 worm_rep_sum$inv_lvl %<>% as.character()
 #(worm_rep_sum)
