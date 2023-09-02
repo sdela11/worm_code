@@ -90,20 +90,20 @@ worm_rep_sum <-
  group_by(site, rep) %>% 
  mutate(biomass_AFDg_TOT = sum(biomass.AFDG.m2)) %>% 
  ungroup() %>% 
- distinct(site_name, .keep_all = TRUE)
+ distinct(site, rep, .keep_all = TRUE)
   
 worm_rep_sum <- worm_rep_sum %>% 
   rename("biomass_m2" = "biomass_AFDg_TOT")
 
 worm_rep_sum$inv_lvl %<>% as.character()
 #(worm_rep_sum)
-#view(worm_rep_sum)  
+view(worm_rep_sum)  
 
 #truncate unneeded columns
 
-keeps <- keeps <- c("site", "rep", "treatment", "forest_type", "biomass_m2")
+keeps <- keeps <- c("site", "rep", "treatment", "forest_type", "inv_lvl", "biomass_m2")
 worm_rep_sum = worm_rep_sum[keeps]
-worm_rep_sum  
+#worm_rep_sum  
 
 #create df to merge all desired site/rep combinations
 worm.R.df <- matrix(data = NA, nrow = 24, ncol = 2)
@@ -115,6 +115,28 @@ worm.R.df
 #worm.R.ecogroup.df
 
 worm_site_summary <- merge(x = worm.R.df, y = worm_rep_sum, all.x = TRUE) # merge expected values df with collected data.
+
+na.chk <- is.na(worm_site_summary["treatment"])
+
+worm_site_summary$string <- substring(worm_site_summary['site'], 1,2)
+
+worm_site_summary[is.na(worm_site_summary[,1])] <- substring(worm_site_summary["site"], 1,2)
+
+str_replace(worm_site_summary$treatment, "NA", substring(worm_site_summary['site'], 1, 2))
+
+sub.test <- substr(worm_site_summary["site"], 1,3)
+  
+worm_site_summary <- worm_site_summary %>% 
+  mutate(inv_lvl = case_when(
+    is.na(site) & grepl("2", treatment) ~ "2",
+    is.na (site) & grepl("5", treatment) ~ "5"
+  ), .after = "site_name") 
+
+worm_site_summary <- worm_site_summary %>%  
+  mutate(forest_type = case_when(
+    grepl("C", treatment) ~ "C",
+    grepl("D", treatment) ~ "D"), .after = "inv_lvl"
+  )
 worm_site_summary[is.na(worm_site_summary)] <- 0 # replace NA values with 0
 
 worm_site_summary
