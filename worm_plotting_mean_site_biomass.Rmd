@@ -96,13 +96,12 @@ worm_rep_sum <- worm_rep_sum %>%
   rename("biomass_m2" = "biomass.AFDG.m2")
 
 worm_rep_sum$inv_lvl %<>% as.character()
-str(worm_rep_sum)
-view(worm_rep_sum)  
+#(worm_rep_sum)
+#view(worm_rep_sum)  
 
 #truncate unneeded columns
 
-keeps <- c("site", "rep", "biomass_m2")
-
+keeps <- keeps <- c("site", "rep", "treatment", "forest_type", "biomass_m2")
 worm_rep_sum = worm_rep_sum[keeps]
 worm_rep_sum  
 
