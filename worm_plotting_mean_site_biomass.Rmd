@@ -152,7 +152,7 @@ wormplot.FUN <- function(data){
 #MAKING OUR INPUTS 
 #1. wormplot.stat
 
-wormplot.stat <- worms.org.musEX %>% 
+wormplot.stat <- worm_site_summary %>% 
 group_by(site) %>% 
   mutate(mean = mean(biomass_m2), SD = sd(biomass_m2)) %>% 
   ungroup() %>% 
