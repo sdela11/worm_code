@@ -118,25 +118,14 @@ worm_site_summary <- merge(x = worm.R.df, y = worm_rep_sum, all.x = TRUE) # merg
 
 na.chk <- is.na(worm_site_summary["treatment"])
 
-worm_site_summary$string <- substring(worm_site_summary['site'], 1,2)
+#create substring column in order to rename treatment column, then delete string column
+worm_site_summary$string <- substr(worm_site_summary$site, 1,2)
+worm_site_summary$treatment <- worm_site_summary$string
+worm_site_summary$string <- NULL
 
-worm_site_summary[is.na(worm_site_summary[,1])] <- substring(worm_site_summary["site"], 1,2)
+#create forest_type column from first character of treatment column
+worm_site_summary$forest_type <- substr(worm_site_summary$treatment,1,1)
 
-str_replace(worm_site_summary$treatment, "NA", substring(worm_site_summary['site'], 1, 2))
-
-sub.test <- substr(worm_site_summary["site"], 1,3)
-  
-worm_site_summary <- worm_site_summary %>% 
-  mutate(inv_lvl = case_when(
-    is.na(site) & grepl("2", treatment) ~ "2",
-    is.na (site) & grepl("5", treatment) ~ "5"
-  ), .after = "site_name") 
-
-worm_site_summary <- worm_site_summary %>%  
-  mutate(forest_type = case_when(
-    grepl("C", treatment) ~ "C",
-    grepl("D", treatment) ~ "D"), .after = "inv_lvl"
-  )
 worm_site_summary[is.na(worm_site_summary)] <- 0 # replace NA values with 0
 
 worm_site_summary
