@@ -46,14 +46,14 @@ worms <- read.csv("../Itasca_worms_2021.csv")
 
 ```{r}
 
-worms <- worms %>% 
+worms <- worms %>% # creates column for rep.
   mutate(rep = case_when(
     grepl("W1", site_name) ~ "W1",
     grepl("W2", site_name) ~ "W2",
     grepl("W3", site_name) ~ "W3"), .after = "site"
   )
 
-worms <- worms %>% 
+worms <- worms %>% # creates column for layer.
   mutate(layer = case_when(
     grepl("min", site_name) ~ "min",
     grepl("mus", site_name) ~ "min",
@@ -140,12 +140,14 @@ Create bar graph comparing biomass_m2 at each site. Error bars represent standar
 
 wormplot.FUN <- function(data){
   Wplot <- ggplot(wormplot.stat, aes(x = site, y = mean, fill = treatment)) +
-  scale_fill_viridis(discrete = TRUE) +
+  #scale_fill_viridis(discrete = TRUE) +
+  scale_fill_grey() +
   geom_col(position = position_dodge()) +
   geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
                 width = .2,
                 position = position_dodge(.9))
   Wplot <- Wplot + ggtitle("Itasca 2021 Worms") +
+    theme_classic() +
     theme(plot.title = element_text(size = rel(1.8), margin = margin(b = 10)))+
     theme(axis.text.x = element_text(size = rel(1.4))) +
     theme(axis.text.y = element_text(size = rel(1.4))) 
@@ -174,9 +176,9 @@ wormplot.stat = wormplot.stat[keeps]
 
 view(wormplot.stat)
 
-print(wormplot.stat)
+#print(wormplot.stat)
 
-write.csv(wormplot.stat, "wormplot.stat.2021.csv")
+#write.csv(wormplot.stat, "wormplot.stat.2021.csv")
 
 
 ##Run the function
