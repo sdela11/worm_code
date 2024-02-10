@@ -37,9 +37,8 @@ Created summarized df, divided biomass totals by the worm ring area to get the b
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 
-worms <- read.csv("../ItascaEarthwormData_2019.csv")
-view(worms)
-#worms <- read.csv("../Itasca_worms_2021.csv")
+#worms <- read.csv("../ItascaEarthwormData_2019.csv")
+worms <- read.csv("../Itasca_worms_2021.csv")
 
 ```
 
@@ -87,8 +86,8 @@ worms.org.musEX
 
 
 worm_rep_sum <-
-  worms %>% 
- #worms.org.musEX %>% 
+  #worms %>% #2019
+ worms.org.musEX %>% #2021
  group_by(site, rep) %>% 
  mutate(biomass_AFDg_TOT = sum(biomass.AFDG.m2)) %>% 
  ungroup() %>% 
@@ -110,8 +109,8 @@ view(worm_rep_sum)
 #create df to merge all desired site/rep combinations
 worm.R.df <- matrix(data = NA, nrow = 24, ncol = 2)
 worm.R.df[,1] <- c(rep("C2A", 3), rep("C2B", 3), rep("C5A", 3), rep("C5B", 3), rep("D2A",3), rep("D2B", 3), rep("D5A", 3), rep("D5B", 3))
-worm.R.df[,2] <- c("R1", "R2", "R3") #for 2019
-#worm.R.df[,2] <- c("W1", "W2", "W3") #for 2021
+#worm.R.df[,2] <- c("R1", "R2", "R3") #for 2019
+worm.R.df[,2] <- c("W1", "W2", "W3") #for 2021
 colnames(worm.R.df) <- c("site", "rep")
 
 worm.R.df
@@ -191,13 +190,13 @@ view(wormplot.stat)
 
 ##Run the function
 
-
+#2019 (Plot A)
 wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019 Worm Biomass")
 mean_site_biomass_A <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019 Worm Biomass")
 
 print(mean_site_biomass_A)
 
-
+#2021 (Plot B)
 wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021 Worm Biomass")
 mean_site_biomass_B <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021 Worm Biomass")
 
