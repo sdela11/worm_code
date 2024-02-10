@@ -198,14 +198,14 @@ wormplot.stat = wormplot.stat[keeps]
 ```{r RUN}
 
 #2019 (Plot A)
-wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019 Worm Biomass")
-mean_site_biomass_A <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019 Worm Biomass")
+#wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019")
+mean_site_biomass_A <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019")
 
 print(mean_site_biomass_A)
 
 #2021 (Plot B)
-wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021 Worm Biomass")
-mean_site_biomass_B <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021 Worm Biomass")
+#wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021")
+mean_site_biomass_B <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021")
 
 print(mean_site_biomass_B)
 
