@@ -187,9 +187,11 @@ view(wormplot.stat)
 #print(wormplot.stat)
 
 #write.csv(wormplot.stat, "wormplot.stat.2021.csv")
-
+```
 
 ##Run the function
+
+```{r RUN}
 
 #2019 (Plot A)
 wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019 Worm Biomass")
@@ -202,7 +204,6 @@ wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021 Worm Biomass")
 mean_site_biomass_B <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021 Worm Biomass")
 
 print(mean_site_biomass_B)
-
 
 ```
 
