@@ -139,22 +139,22 @@ worm_site_summary
 Create bar graph comparing biomass_m2 at each site. Error bars represent standard error of the mean
 
 
-```{r wormplot good 2021}
+```{r wormplot good}
 
 wormplot.FUN <- function(data, plot.name, title){
-  plot <- ggplot(wormplot.stat, aes(x = site, y = mean, fill = treatment)) +
+  Wplot <- ggplot(wormplot.stat, aes(x = site, y = mean, fill = treatment)) +
   #scale_fill_viridis(discrete = TRUE) +
   scale_fill_grey() +
   geom_col(position = position_dodge()) +
   geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
                 width = .2,
                 position = position_dodge(.9))
-  plot <- plot + ggtitle(title) +
+  Wplot <- Wplot + ggtitle(title) +
     theme_classic() +
     theme(plot.title = element_text(size = rel(1.8), margin = margin(b = 10)))+
     theme(axis.text.x = element_text(size = rel(1.4))) +
     theme(axis.text.y = element_text(size = rel(1.4))) 
-  plot <- plot +
+  Wplot <- Wplot +
     labs(x= "Site", y = "EW biomass (g/m2)", size = rel(1.8)) +
     theme(axis.title.x = element_text(size = rel(1.5), face = "bold", margin = margin(t = 8)))+
     theme(axis.title.y = element_text(size = rel(1.5), face = "bold", margin = margin(r = 8)))+
@@ -162,8 +162,9 @@ wormplot.FUN <- function(data, plot.name, title){
     theme(legend.title = element_text(size = rel(1.4)))
   
   png(file = glue("{plot.name}.png"), width = 600, height = 600, units = 'px') #Printing graph as png, can choose size of graph here
-  print(plot)
+  print(Wplot)
   dev.off()
+  return(Wplot)
   
 }
 
@@ -190,8 +191,17 @@ view(wormplot.stat)
 
 ##Run the function
 
-wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021 Worm Biomass")
 
 wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019 Worm Biomass")
+mean_site_biomass_A <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019 Worm Biomass")
+
+print(mean_site_biomass_A)
+
+
+wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021 Worm Biomass")
+mean_site_biomass_B <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021 Worm Biomass")
+
+print(mean_site_biomass_B)
+
 
 ```
