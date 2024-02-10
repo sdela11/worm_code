@@ -204,3 +204,28 @@ print(mean_site_biomass_B)
 
 
 ```
+
+## Arranging plots A and B using ggarrange
+
+```{r plot combine}
+
+#Combining graphs using ggarrange
+
+litter_combine_plot <- ggarrange(af_litter_plot, #first plot (from above)
+          mf_litter_plot + #second plot, identical to the first one except different data, has the x axis label in it because it is the center graph of the arrange
+                    theme(axis.text.y = element_blank(), #removing y axis labels from this graph, I did not want more than one y axis label
+                     axis.ticks.y = element_blank(),
+                     axis.title.y = element_blank() ) , 
+          wdf_litter_plot + #third plot, identical to the first one with different data
+                    theme(axis.text.y = element_blank(), #removing y axis labels from this graph, I did not want more than one y axis label
+                     axis.ticks.y = element_blank(),
+                     axis.title.y = element_blank()),
+          widths = c(1, 0.86, 0.86), #changing widths to be equal
+          common.legend = TRUE, legend = "bottom", #shared legend, legend position
+          nrow = 1) #number of rows
+
+png(file = "litter_combine_plot.png", width = 1400, height = 500, units = "px") #printing combined graph, can again choose size here
+print(litter_combine_plot)
+
+
+```
