@@ -31,19 +31,26 @@ library(ggpubr)
 getwd()
 
 ```
-First need to summarize sums by replicate, then take the mean of the group.
-Created summarized df, divided biomass totals by the worm ring area to get the biomass totals for each rep.
+IMPORTANT: 2019 and 2021 worms come from different .csv files with different labelling. 2019 and 2021 data need to be plotted separately and then combined.
 
-```{r }
+To switch between years, use Ctrl + F and the year you want to locate the three "switches" in the following sections: "read-in" and "worm site summary".
+
+When you run the plotting function, choose A for 19 and B for 21.
+
+
+##First need to summarize sums by replicate, then take the mean of the group.
+
+```{r read-in}
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 
-#worms <- read.csv("../ItascaEarthwormData_2019.csv")
-worms <- read.csv("../Itasca_worms_2021.csv")
+#worms <- read.csv("../ItascaEarthwormData_2019.csv") #2019
+worms <- read.csv("../Itasca_worms_2021.csv") #2021
 
 ```
 
 ## FOR 2021 WORMS ONLY ##
+Creates a "rep" column and "layer" column, then selects only the measurements from the organic layer and the mustard extractions. (Dis-includes hand-sorting of mineral layer)
 
 ```{r}
 
@@ -77,7 +84,7 @@ worms.org.musEX
 
 ##2019 Processing starts here
 
-```{r }
+```{r worm site summary}
 
 #For ecogroup plot (total):
 #worm_rep_ecogrp <- worms %>% 
@@ -103,7 +110,7 @@ worm_rep_sum$inv_lvl %<>% as.character()
 #(worm_rep_sum)
 view(worm_rep_sum)  
 
-#truncate unneeded columns
+#truncate unneeded columns by only selecting the ones we want.
 
 keeps <- c("site", "rep", "treatment", "forest_type", "inv_lvl", "biomass_m2")
 worm_rep_sum = worm_rep_sum[keeps]
@@ -172,8 +179,13 @@ wormplot.FUN <- function(data, plot.name, title){
   
 }
 
-#MAKING OUR INPUTS 
-#1. wormplot.stat
+```
+
+##MAKING OUR INPUTS 
+
+#IMPORTANT: Needs to be re-run every time you switch the year!!!
+
+```{r stat summary for worm plot}
 
 wormplot.stat <- worm_site_summary %>% 
 group_by(site) %>% 
