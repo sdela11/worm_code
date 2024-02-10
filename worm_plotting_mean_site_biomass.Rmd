@@ -230,7 +230,7 @@ mean_site_biomass_combine_plot <- ggarrange(mean_site_biomass_A, #first plot (fr
           common.legend = TRUE, legend = "bottom", #shared legend, legend position
           nrow = 1) #number of rows
 
-png(file = "mean_site_biomass_combine_plot.png", width = 1400, height = 500, units = "px") #printing combined graph, can again choose size here
+png(file = "mean_site_biomass_combine_plot.png", width = 1100, height = 500, units = "px") #printing combined graph, can again choose size here
 print(mean_site_biomass_combine_plot)
 
 
