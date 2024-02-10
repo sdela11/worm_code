@@ -31,11 +31,15 @@ library(ggpubr)
 getwd()
 
 ```
-IMPORTANT: 2019 and 2021 worms come from different .csv files with different labelling. 2019 and 2021 data need to be plotted separately and then combined.
+IMPORTANT: 
 
-To switch between years, use Ctrl + F and the year you want to locate the three "switches" in the following sections: "read-in" and "worm site summary".
+-2019 and 2021 worms come from different .csv files with different labelling. '19 and '21 data need to be plotted separately and then combined.
 
-When you run the plotting function, choose A for 19 and B for 21.
+-To switch between years, use Ctrl + F and the year you want to locate the three "switches" in the following sections: "read-in" and "worm site summary".
+
+-When you run the plotting function, choose A for 19 and B for 21.
+
+-chunk: "stat summary for worm plot" needs to be re-run every time you switch the year.
 
 
 ##First need to summarize sums by replicate, then take the mean of the group.
