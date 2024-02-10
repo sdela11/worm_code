@@ -105,10 +105,10 @@ view(worm_rep_ecogrp)
 
 
 #create df to merge all desired site/rep combinations
-worm.R.ecogroup.df <- matrix(data = NA, nrow = 32, ncol = 2)
-worm.R.ecogroup.df[,1] <- c(rep("C2A", 4), rep("C2B", 4), rep("C5A", 4), rep("C5B", 4), 
-                rep("D2A", 4), rep("D2B", 4), rep("D5A", 4), rep("D5B", 4))
-worm.R.ecogroup.df[,2] <- c("endogeic", "epi-endogeic", "epi-anecic", "epigeic")
+worm.R.ecogroup.df <- matrix(data = NA, nrow = 40, ncol = 2)
+worm.R.ecogroup.df[,1] <- c(rep("C2A", 5), rep("C2B", 5), rep("C5A", 5), rep("C5B", 5), 
+                rep("D2A", 5), rep("D2B", 5), rep("D5A", 5), rep("D5B", 5))
+worm.R.ecogroup.df[,2] <- c("endogeic", "epi-endogeic", "epi-anecic", "epigeic", "epi-endogeic.anecic")
 colnames(worm.R.ecogroup.df) <- c("site", "ecol_group")
 
 #worm.R.ecogroup.df
