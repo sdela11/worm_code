@@ -20,6 +20,7 @@ library(dplyr)
 library(wesanderson)
 library(viridis)
 library(ggplot2)
+library(ggpubr)
 
 #install.packages("viridis")
 
@@ -36,7 +37,7 @@ getwd()
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 worms <- read.csv("../Itasca_worms_2021.csv")
-worms
+#worms
 
 ```
 
@@ -69,16 +70,16 @@ worms.org.musEX
 
 
 #For ecogroup plot (total):
-worm_rep_ecogrp <- worms %>% 
-  group_by(site, ecol_group) %>% 
-  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
+#worm_rep_ecogrp <- worms %>% 
+#  group_by(site, ecol_group) %>% 
+#  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
    
-worm_rep_ecogrp %<>% 
-  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
+#worm_rep_ecogrp %<>% 
+#  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
 
 #worm_rep_ecogrp$inv_lvl %<>% as.character()
-str(worm_rep_ecogrp)
-view(worm_rep_ecogrp)
+#str(worm_rep_ecogrp)
+#view(worm_rep_ecogrp)
 
 ```
 
@@ -86,34 +87,59 @@ view(worm_rep_ecogrp)
 ```{r }
 #For ecogroup plot (site mean):
 
-worm_rep_ecogrp <- worms %>% 
-  group_by(site, rep, ecol_group) %>% 
-  summarise(biomass_AFDg_TOT = sum(biomass_AFDg))
-   
-worm_rep_ecogrp %<>% 
-  mutate(biomass_m2 = biomass_AFDg_TOT/0.080425)
+worm_rep_sum <-
+ #worms %>% #2019
+ worms.org.musEX %>% #2021
+ group_by(site, rep, ecol_group) %>% 
+ mutate(biomass_AFDg_TOT = sum(biomass.AFDG.m2)) %>% 
+ ungroup() %>% 
+ distinct(site, rep, ecol_group, .keep_all = TRUE)
+  
+worm_rep_sum <- worm_rep_sum %>% 
+  rename("biomass_m2" = "biomass_AFDg_TOT")
 
-worm_rep_ecogrp %<>%
-  group_by(site, ecol_group) %>% 
-  summarise(biomass_eco_m2 = mean(biomass_m2)) %>% 
-  ungroup()
+worm_rep_sum$inv_lvl %<>% as.character()
+#(worm_rep_sum)
+view(worm_rep_sum)  
+
+#truncate unneeded columns by only selecting the ones we want.
+
+keeps <- c("site", "rep", "treatment", "forest_type", "inv_lvl", "ecol_group", "biomass_m2")
+worm_rep_sum = worm_rep_sum[keeps]
+view(worm_rep_sum)  
+
+
+#worm_rep_ecogrp %<>%
+#  group_by(site, ecol_group) %>% 
+#  summarise(biomass_eco_m2 = mean(biomass_m2)) %>% 
+#  ungroup()
 #worm_rep_ecogrp$inv_lvl %<>% as.character()
 #class(worm_rep_ecogrp$inv_lvl)
 
-str(worm_rep_ecogrp)
-view(worm_rep_ecogrp) 
+str(worm_rep_sum)
+view(worm_rep_sum) 
 
 
 #create df to merge all desired site/rep combinations
-worm.R.ecogroup.df <- matrix(data = NA, nrow = 40, ncol = 2)
-worm.R.ecogroup.df[,1] <- c(rep("C2A", 5), rep("C2B", 5), rep("C5A", 5), rep("C5B", 5), 
-                rep("D2A", 5), rep("D2B", 5), rep("D5A", 5), rep("D5B", 5))
-worm.R.ecogroup.df[,2] <- c("endogeic", "epi-endogeic", "epi-anecic", "epigeic", "epi-endogeic.anecic")
-colnames(worm.R.ecogroup.df) <- c("site", "ecol_group")
+worm.R.ecogroup.df <- matrix(data = NA, nrow = 120, ncol = 6)
+worm.R.ecogroup.df[,1] <- c(rep("C2A", 15), rep("C2B", 15), rep("C5A", 15), rep("C5B", 15), rep("D2A", 15), rep("D2B", 15), rep("D5A", 15), rep("D5B", 15))
+worm.R.ecogroup.df[,2] <- c(rep("W1", 5), rep("W2", 5), rep("W3", 5)) #2021
+#worm.R.ecogroup.df[,2] <- c(rep("R1", 5), rep("R2", 5), rep("R3", 5)) #2019
+worm.R.ecogroup.df[,3] <- c("endogeic", "epi-endogeic", "epi-anecic", "epigeic", "epi-endogeic.anecic")
+worm.R.ecogroup.df[,4] <- c(rep("C2",30), rep("C5", 30), rep("D2", 30), rep("D5", 30))
+worm.R.ecogroup.df[,5] <- c(rep("C",60), rep("D", 60))
+worm.R.ecogroup.df[,6] <- c(rep("2", 30), rep("5", 30))
 
-#worm.R.ecogroup.df
+colnames(worm.R.ecogroup.df) <- c("site", "rep", "ecol_group", "treatment", "forest_type", "inv_lvl")
 
-worm_site_summary <- merge(x = worm.R.ecogroup.df, y = worm_rep_ecogrp, all.x = TRUE) # merge expected values df with collected data.
+view(worm.R.ecogroup.df)
+
+col_order <- c("site", "rep", "ecol_group", "treatment", "forest_type", "inv_lvl", "biomass_m2")
+worm_rep_sum <- worm_rep_sum[,col_order]
+
+#my_data2 <- my_data[, col_order]
+
+worm_site_summary <- merge(x = worm.R.ecogroup.df, y = worm_rep_sum, all.x = TRUE) # merge expected values df with collected data.
 worm_site_summary[is.na(worm_site_summary)] <- 0 # replace NA values with 0
 
 worm_site_summary
