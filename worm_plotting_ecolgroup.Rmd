@@ -180,7 +180,6 @@ wormplot.FUN(wormplot.df) #run the function
 ```
 
 
-```{r new plot}
 
 ```{r wormplot good}
 
@@ -189,11 +188,11 @@ wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables 
   #scale_fill_viridis(discrete = TRUE) +
   theme_classic() + #I think this chooses fonts and default sizes?
   scale_fill_grey() + #sets color palette
-  geom_col(position = position_dodge(), colour = "black", linewidth = 1) +
-  geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
-                linewidth = 1,
-                width = .2,
-                position = position_dodge(.9)) +
+  geom_col(position = position_dodge(), width = 0.6, colour = "black", linewidth = 1) +
+  #geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
+  #              linewidth = 1,
+  #              width = .2,
+  #              position = position_dodge(.9)) +
     scale_y_continuous(limits = c(0,7), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
 
   #title and axis label(tick mark) sizing  
