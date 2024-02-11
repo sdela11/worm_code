@@ -182,9 +182,81 @@ wormplot.FUN(wormplot.df) #run the function
 
 ```{r new plot}
 
+```{r wormplot good}
 
+wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables and coordinates
+  Wplot <- ggplot(wormplot.stat, aes(x = site, y = mean, fill = treatment)) +
+  #scale_fill_viridis(discrete = TRUE) +
+  theme_classic() + #I think this chooses fonts and default sizes?
+  scale_fill_grey() + #sets color palette
+  geom_col(position = position_dodge(), colour = "black", linewidth = 1) +
+  geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
+                linewidth = 1,
+                width = .2,
+                position = position_dodge(.9)) +
+    scale_y_continuous(limits = c(0,7), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
 
+  #title and axis label(tick mark) sizing  
+  Wplot <- Wplot + ggtitle(title) +
+    theme(plot.title = element_text(size = rel(2.5), margin = margin(b = 10)))+
+    theme(axis.text.x = element_text(size = rel(2.4))) +
+    theme(axis.text.y = element_text(size = rel(2.4))) 
+  
+  #axis titles, legend titles, style, margins and sizing.
+  Wplot <- Wplot +
+    labs(x= "Site", y = "EW biomass (g/m2)", size = rel(2.4), fill = "Treatment") +
+    theme(axis.title.x = element_text(size = rel(2.1), face = "bold", margin = margin(t = 8)))+
+    theme(axis.title.y = element_text(size = rel(2.1), face = "bold", margin = margin(r = 8)))+
+    theme(legend.text = element_text(size = rel(1.7))) +
+    theme(legend.title = element_text(size = rel(1.7)))
+  
+  png(file = glue("{plot.name}.png"), width = 600, height = 600, units = 'px') #Printing graph as png, can choose size of graph here
+  print(Wplot)
+  dev.off()
+  return(Wplot)
+  
+}
 
+```
 
+##MAKING OUR INPUTS 
+
+#IMPORTANT: Needs to be re-run every time you switch the year!!!
+
+```{r stat summary for worm plot}
+
+wormplot.stat <- worm_site_summary %>% 
+group_by(site) %>% 
+  mutate(mean = mean(biomass_m2), SD = sd(biomass_m2)) %>% 
+  ungroup() %>% 
+  mutate(SE = SD/(sqrt(length(SD)))) %>% 
+  distinct(site, .keep_all = TRUE)
+
+#keep only needed columns
+keeps <- c("site","treatment", "forest_type", "biomass_m2", "mean", "SD", "SE")
+wormplot.stat = wormplot.stat[keeps]  
+
+#view(wormplot.stat)
+
+#print(wormplot.stat)
+
+#write.csv(wormplot.stat, "wormplot.stat.2021.csv")
+```
+
+##Run the function
+
+```{r RUN}
+
+#2019 (Plot A)
+#wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019")
+mean_site_biomass_A <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2019", "2019")
+
+print(mean_site_biomass_A)
+
+#2021 (Plot B)
+#wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021")
+mean_site_biomass_B <- wormplot.FUN(wormplot.stat, "mean_site_biomass_2021", "2021")
+
+print(mean_site_biomass_B)
 
 ```
