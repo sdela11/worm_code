@@ -36,7 +36,9 @@ getwd()
 ```{r }
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
-worms <- read.csv("../Itasca_worms_2021.csv")
+worms <- read.csv("../ItascaEarthwormData_2019.csv") #2019
+worms <- read.csv("../Itasca_worms_2021.csv") #2021
+
 #worms
 
 ```
@@ -88,8 +90,8 @@ worms.org.musEX
 #For ecogroup plot (site mean):
 
 worm_rep_sum <-
- #worms %>% #2019
- worms.org.musEX %>% #2021
+ worms %>% #2019
+ #worms.org.musEX %>% #2021
  group_by(site, rep, ecol_group) %>% 
  mutate(biomass_AFDg_TOT = sum(biomass.AFDG.m2)) %>% 
  ungroup() %>% 
@@ -123,8 +125,8 @@ view(worm_rep_sum)
 #create df to merge all desired site/rep combinations
 worm.R.ecogroup.df <- matrix(data = NA, nrow = 120, ncol = 6)
 worm.R.ecogroup.df[,1] <- c(rep("C2A", 15), rep("C2B", 15), rep("C5A", 15), rep("C5B", 15), rep("D2A", 15), rep("D2B", 15), rep("D5A", 15), rep("D5B", 15))
-worm.R.ecogroup.df[,2] <- c(rep("W1", 5), rep("W2", 5), rep("W3", 5)) #2021
-#worm.R.ecogroup.df[,2] <- c(rep("R1", 5), rep("R2", 5), rep("R3", 5)) #2019
+#worm.R.ecogroup.df[,2] <- c(rep("W1", 5), rep("W2", 5), rep("W3", 5)) #2021
+worm.R.ecogroup.df[,2] <- c(rep("R1", 5), rep("R2", 5), rep("R3", 5)) #2019
 worm.R.ecogroup.df[,3] <- c("endogeic", "epi-endogeic", "epi-anecic", "epigeic", "epi-endogeic.anecic")
 worm.R.ecogroup.df[,4] <- c(rep("C2",30), rep("C5", 30), rep("D2", 30), rep("D5", 30))
 worm.R.ecogroup.df[,5] <- c(rep("C",60), rep("D", 60))
@@ -198,7 +200,7 @@ wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables 
   #              linewidth = 1,
   #              width = .2,
   #              position = position_dodge(.9)) +
-    scale_y_continuous(limits = c(0,5), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
+    scale_y_continuous(limits = c(0,5.5), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
 
   #title and axis label(tick mark) sizing  
   Wplot <- Wplot + ggtitle(title) +
