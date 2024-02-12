@@ -200,7 +200,7 @@ wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables 
   #              linewidth = 1,
   #              width = .2,
   #              position = position_dodge(.9)) +
-    scale_y_continuous(limits = c(0,5.5), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
+    scale_y_continuous(limits = c(0,4.5), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
 
   #title and axis label(tick mark) sizing  
   Wplot <- Wplot + ggtitle(title) +
