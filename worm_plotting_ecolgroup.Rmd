@@ -187,13 +187,13 @@ wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables 
   Wplot <- ggplot(wormplot.stat, aes(x = site, y = mean, fill = ecol_group)) +
   #scale_fill_viridis(discrete = TRUE) +
   theme_classic() + #I think this chooses fonts and default sizes?
-  scale_fill_grey() + #sets color palette
-  geom_col(position = position_dodge(), width = 0.6, colour = "black", linewidth = 1) +
+  scale_fill_grey(labels = c("Endogeic", "Epi-anecic", "Epi-endogeic", "Epi-endogeic/anecic", "Epigeic")) + #sets color palette
+  geom_col(position = position_dodge(), width = .7, colour = "black", linewidth = 1) +
   #geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
   #              linewidth = 1,
   #              width = .2,
   #              position = position_dodge(.9)) +
-    scale_y_continuous(limits = c(0,7), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
+    scale_y_continuous(limits = c(0,5), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
 
   #title and axis label(tick mark) sizing  
   Wplot <- Wplot + ggtitle(title) +
@@ -206,10 +206,10 @@ wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables 
     labs(x= "Site", y = "EW biomass (g/m2)", size = rel(2.4), fill = "Ecologic Group") +
     theme(axis.title.x = element_text(size = rel(2.1), face = "bold", margin = margin(t = 8)))+
     theme(axis.title.y = element_text(size = rel(2.1), face = "bold", margin = margin(r = 8)))+
-    theme(legend.text = element_text(size = rel(1.7))) +
+    theme(legend.text = element_text(size = rel(1.4))) +
     theme(legend.title = element_text(size = rel(1.7)))
   
-  png(file = glue("{plot.name}.png"), width = 600, height = 600, units = 'px') #Printing graph as png, can choose size of graph here
+  png(file = glue("{plot.name}.png"), width = 1000, height = 600, units = 'px') #Printing graph as png, can choose size of graph here
   print(Wplot)
   dev.off()
   return(Wplot)
@@ -229,12 +229,14 @@ group_by(site, ecol_group) %>%
   mutate(mean = mean(biomass_m2), SD = sd(biomass_m2)) %>% 
   ungroup() %>% 
   mutate(SE = SD/(sqrt(length(SD)))) %>% 
-  distinct(site, ecol_group, .keep_all = TRUE)
+  distinct(site, ecol_group, .keep_all = TRUE) %>% 
+  group_by(site)
 
 #keep only needed columns
 keeps <- c("site","treatment", "ecol_group", "forest_type", "biomass_m2", "mean", "SD", "SE")
 wormplot.stat = wormplot.stat[keeps]  
 
+str(wormplot.stat)
 view(wormplot.stat)
 
 #print(wormplot.stat)
