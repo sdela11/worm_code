@@ -187,7 +187,12 @@ wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables 
   Wplot <- ggplot(wormplot.stat, aes(x = site, y = mean, fill = ecol_group)) +
   #scale_fill_viridis(discrete = TRUE) +
   theme_classic() + #I think this chooses fonts and default sizes?
-  scale_fill_grey(labels = c("Endogeic", "Epi-anecic", "Epi-endogeic", "Epi-endogeic/anecic", "Epigeic")) + #sets color palette
+  scale_fill_manual(values = c("#FFFFFF", 
+                               "#CCCCCC", 
+                               "#808080", 
+                               "#333333", 
+                               "#000000"),
+                    labels = c("Endogeic", "Epi-anecic", "Epi-endogeic", "Epi-endogeic/anecic", "Epigeic")) + #sets color palette
   geom_col(position = position_dodge(), width = .7, colour = "black", linewidth = 1) +
   #geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
   #              linewidth = 1,
