@@ -142,7 +142,7 @@ worm_rep_sum <- worm_rep_sum[,col_order]
 worm_site_summary <- merge(x = worm.R.ecogroup.df, y = worm_rep_sum, all.x = TRUE) # merge expected values df with collected data.
 worm_site_summary[is.na(worm_site_summary)] <- 0 # replace NA values with 0
 
-worm_site_summary
+view(worm_site_summary)
 
 ```
 
@@ -229,17 +229,18 @@ group_by(site, ecol_group) %>%
   mutate(mean = mean(biomass_m2), SD = sd(biomass_m2)) %>% 
   ungroup() %>% 
   mutate(SE = SD/(sqrt(length(SD)))) %>% 
-  distinct(site, .keep_all = TRUE)
+  distinct(site, ecol_group, .keep_all = TRUE)
 
 #keep only needed columns
 keeps <- c("site","treatment", "ecol_group", "forest_type", "biomass_m2", "mean", "SD", "SE")
 wormplot.stat = wormplot.stat[keeps]  
 
-#view(wormplot.stat)
+view(wormplot.stat)
 
 #print(wormplot.stat)
 
 #write.csv(wormplot.stat, "wormplot.stat.2021.csv")
+
 ```
 
 ##Run the function
