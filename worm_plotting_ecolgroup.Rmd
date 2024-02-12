@@ -148,40 +148,7 @@ view(worm_site_summary)
 
 ```
 
-#Plotting the MEAN biomass of ecological groups at each site. No error bars because that would be messy.
-
-```{r }
-
-
-wormplot.FUN <- function(data){
-  Wplot <- ggplot(wormplot.df, aes(x = site, y = biomass_m2, fill = ecol_group)) +
-  scale_fill_manual(values = wes_palette("Darjeeling1", n = 4)) +
-  geom_col(stat = "identity", position = "dodge", width = 0.6) 
-  #geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
- #               width = .2,
-  #              position = position_dodge(.9))
-  Wplot <- Wplot + ggtitle("Itasca 2021 Worms", subtitle = "Mean biomass by site and ecologic group") +
-    theme(plot.title = element_text(size = rel(1.8), margin = margin(b = 10)))+
-    theme(axis.text.x = element_text(size = rel(1.4))) +
-    theme(axis.text.y = element_text(size = rel(1.4))) 
-  Wplot <- Wplot +
-    labs(x= "Site", y = "EW biomass (g/m2)", size = rel(1.8)) +
-    labs(fill = "Ecologic group") +
-    theme(axis.title.x = element_text(size = rel(1.5), face = "bold", margin = margin(t = 8)))+
-    theme(axis.title.y = element_text(size = rel(1.5), face = "bold", margin = margin(r = 8)))+
-    theme(legend.text = element_text(size = rel(1.4))) +
-    theme(legend.title = element_text(size = rel(1.4)))
-  
- print(Wplot) #print
-}
-
-#wormplot.df
-wormplot.df <- worm_site_summary
-wormplot.FUN(wormplot.df) #run the function
-
-```
-
-
+##Good plotting code for individual year plots.
 
 ```{r wormplot good}
 
@@ -270,6 +237,7 @@ print(ecol_grp_biomass_B)
 
 ```
 
+##Plot combining
 
 ```{r plot combine}
 
@@ -291,5 +259,39 @@ ecolgroup_combine_plot <- ggarrange(ecol_grp_biomass_A, #first plot (from above)
 png(file = "ecol_grp_combine_plot_V1.png", width = 1000, height = 1000, units = "px") #printing combined graph, can again choose size here
 print(ecolgroup_combine_plot)
 
+
+```
+
+
+#Original plotting code with wes_palette colors. May need changes if you desire to use it.
+
+```{r }
+
+
+wormplot.FUN <- function(data){
+  Wplot <- ggplot(wormplot.df, aes(x = site, y = biomass_m2, fill = ecol_group)) +
+  scale_fill_manual(values = wes_palette("Darjeeling1", n = 4)) +
+  geom_col(stat = "identity", position = "dodge", width = 0.6) 
+  #geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
+ #               width = .2,
+  #              position = position_dodge(.9))
+  Wplot <- Wplot + ggtitle("Itasca 2021 Worms", subtitle = "Mean biomass by site and ecologic group") +
+    theme(plot.title = element_text(size = rel(1.8), margin = margin(b = 10)))+
+    theme(axis.text.x = element_text(size = rel(1.4))) +
+    theme(axis.text.y = element_text(size = rel(1.4))) 
+  Wplot <- Wplot +
+    labs(x= "Site", y = "EW biomass (g/m2)", size = rel(1.8)) +
+    labs(fill = "Ecologic group") +
+    theme(axis.title.x = element_text(size = rel(1.5), face = "bold", margin = margin(t = 8)))+
+    theme(axis.title.y = element_text(size = rel(1.5), face = "bold", margin = margin(r = 8)))+
+    theme(legend.text = element_text(size = rel(1.4))) +
+    theme(legend.title = element_text(size = rel(1.4)))
+  
+ print(Wplot) #print
+}
+
+#wormplot.df
+wormplot.df <- worm_site_summary
+wormplot.FUN(wormplot.df) #run the function
 
 ```
