@@ -37,7 +37,7 @@ getwd()
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 worms <- read.csv("../ItascaEarthwormData_2019.csv") #2019
-worms <- read.csv("../Itasca_worms_2021.csv") #2021
+#worms <- read.csv("../Itasca_worms_2021.csv") #2021
 
 #worms
 
@@ -102,13 +102,13 @@ worm_rep_sum <- worm_rep_sum %>%
 
 worm_rep_sum$inv_lvl %<>% as.character()
 #(worm_rep_sum)
-view(worm_rep_sum)  
+#view(worm_rep_sum)  
 
 #truncate unneeded columns by only selecting the ones we want.
 
 keeps <- c("site", "rep", "treatment", "forest_type", "inv_lvl", "ecol_group", "biomass_m2")
 worm_rep_sum = worm_rep_sum[keeps]
-view(worm_rep_sum)  
+#view(worm_rep_sum)  
 
 
 #worm_rep_ecogrp %<>%
@@ -118,8 +118,8 @@ view(worm_rep_sum)
 #worm_rep_ecogrp$inv_lvl %<>% as.character()
 #class(worm_rep_ecogrp$inv_lvl)
 
-str(worm_rep_sum)
-view(worm_rep_sum) 
+#str(worm_rep_sum)
+#view(worm_rep_sum) 
 
 
 #create df to merge all desired site/rep combinations
@@ -134,7 +134,7 @@ worm.R.ecogroup.df[,6] <- c(rep("2", 30), rep("5", 30))
 
 colnames(worm.R.ecogroup.df) <- c("site", "rep", "ecol_group", "treatment", "forest_type", "inv_lvl")
 
-view(worm.R.ecogroup.df)
+#view(worm.R.ecogroup.df)
 
 col_order <- c("site", "rep", "ecol_group", "treatment", "forest_type", "inv_lvl", "biomass_m2")
 worm_rep_sum <- worm_rep_sum[,col_order]
