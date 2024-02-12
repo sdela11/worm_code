@@ -200,7 +200,7 @@ wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables 
   #              linewidth = 1,
   #              width = .2,
   #              position = position_dodge(.9)) +
-    scale_y_continuous(limits = c(0,4.5), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
+    scale_y_continuous(limits = c(0,4), expand = c(0,0)) #set scale so that both plots will have the same y-axis.
 
   #title and axis label(tick mark) sizing  
   Wplot <- Wplot + ggtitle(title) +
@@ -267,5 +267,29 @@ print(ecol_grp_biomass_A)
 ecol_grp_biomass_B <- wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2021", "2021")
 
 print(ecol_grp_biomass_B)
+
+```
+
+
+```{r plot combine}
+
+#Combining graphs using ggarrange
+
+ecolgroup_combine_plot <- ggarrange(ecol_grp_biomass_A, #first plot (from above)
+          ecol_grp_biomass_B, #second plot, identical to the first one except different data, has the x axis label in it because it is the center graph of the arrange
+                    #theme(axis.text.y = element_blank(), #removing y axis labels from this graph, I did not want more than one y axis label
+                     #axis.ticks.y = element_blank(),
+                     #axis.title.y = element_blank() ),
+         # wdf_litter_plot + #third plot, identical to the first one with different data
+                    #theme(axis.text.y = element_blank(), #removing y axis labels from this graph, I did not want more than one y axis label
+                     #axis.ticks.y = element_blank(),
+                     #axis.title.y = element_blank()),
+          widths = c(0.86, 0.86), #changing widths to be equal
+          common.legend = TRUE, legend = "bottom", #shared legend, legend position
+          nrow = 2, ncol = 1) #number of rows/columns
+
+png(file = "ecol_grp_combine_plot_V1.png", width = 1000, height = 1000, units = "px") #printing combined graph, can again choose size here
+print(ecolgroup_combine_plot)
+
 
 ```
