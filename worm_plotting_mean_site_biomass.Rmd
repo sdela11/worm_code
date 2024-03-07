@@ -255,3 +255,21 @@ print(mean_site_biomass_combine_plot)
 
 
 ```
+
+
+```{r 2021 statistical analysis}
+
+fm.treat <- lm(biomass_m2 ~ treatment, data = worm_site_summary)
+anova(fm.treat)
+summary(fm.treat)
+
+fm.invlvl <- lm(biomass_m2 ~ inv_lvl, data = worm_site_summary)
+anova(fm.invlvl)
+summary(fm.invlvl)
+
+fm.veg <- lm(biomass_m2 ~ forest_type, data = worm_site_summary)
+anova(fm.veg)
+summary(fm.veg)
+
+view(worm_site_summary)
+```
