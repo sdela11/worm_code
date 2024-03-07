@@ -131,16 +131,16 @@ worm.R.df
 #worm.R.ecogroup.df
 
 worm_site_summary <- merge(x = worm.R.df, y = worm_rep_sum, all.x = TRUE) # merge expected values df with collected data.
+view(worm_site_summary)
 
 na.chk <- is.na(worm_site_summary["treatment"])
 
-#create substring column in order to rename treatment column, then delete string column
-worm_site_summary$string <- substr(worm_site_summary$site, 1,2)
-worm_site_summary$treatment <- worm_site_summary$string
-worm_site_summary$string <- NULL
+#Use substring of site to rename treatment column
+worm_site_summary$treatment <- substr(worm_site_summary$site, 1,2)
 
 #create forest_type column from first character of treatment column
 worm_site_summary$forest_type <- substr(worm_site_summary$treatment,1,1)
+worm_site_summary$inv_lvl <- substr(worm_site_summary$treatment,2,2)
 
 worm_site_summary[is.na(worm_site_summary)] <- 0 # replace NA values with 0
 
