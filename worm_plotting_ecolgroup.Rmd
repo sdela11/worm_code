@@ -161,7 +161,7 @@ wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables 
                                "#808080", 
                                "#333333", 
                                "#000000"),
-                    labels = c("Endogeic", "Epi-anecic", "Epi-endogeic", "Epi-endogeic/anecic", "Epigeic")) + #sets color palette
+                    labels = c("Endogeic", "Anecic", "Epi-endogeic", "Epi-endogeic/anecic", "Epigeic")) + #sets color palette
   geom_col(position = position_dodge(), width = .6, colour = "black", linewidth = 1) +
   #geom_errorbar(aes(ymin = mean-SE, ymax = mean+SE),
   #              linewidth = 1,
