@@ -177,7 +177,7 @@ wormplot.FUN <- function(data, plot.name, title){ #plot construction, variables 
   
   #axis titles, legend titles, style, margins and sizing.
   Wplot <- Wplot +
-    labs(x= "Site", y = "EW biomass (g/m2)", size = rel(2.4), fill = "Ecologic Group") +
+    labs(x= "Site", y = expression(Earthworm~biomass~(g/m^2)), size = rel(2.4), fill = "Ecological Group") +
     theme(axis.title.x = element_text(size = rel(2.1), face = "bold", margin = margin(t = 8)))+
     theme(axis.title.y = element_text(size = rel(2.1), face = "bold", margin = margin(r = 8)))+
     theme(legend.text = element_text(size = rel(1.5))) +
@@ -225,13 +225,13 @@ view(wormplot.stat)
 
 #2019 (Plot A)
 #wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2019", "2019")
-ecol_grp_biomass_A <- wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2019", "2019")
+ecol_grp_biomass_A <- wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2019_test", "2019")
 
 print(ecol_grp_biomass_A)
 
 #2021 (Plot B)
 #wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2021", "2021")
-ecol_grp_biomass_B <- wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2021", "2021")
+ecol_grp_biomass_B <- wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2021_test", "2021")
 
 print(ecol_grp_biomass_B)
 
