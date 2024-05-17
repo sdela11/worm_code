@@ -221,17 +221,21 @@ view(wormplot.stat)
 
 ##Run the function
 
-```{r RUN}
+```{r Plot A 2019}
 
 #2019 (Plot A)
 #wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2019", "2019")
-ecol_grp_biomass_A <- wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2019_test", "2019")
+ecol_grp_biomass_A <- wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2019", "2019")
 
 print(ecol_grp_biomass_A)
 
+```
+
+
+```{r Plot B 2021}
 #2021 (Plot B)
 #wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2021", "2021")
-ecol_grp_biomass_B <- wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2021_test", "2021")
+ecol_grp_biomass_B <- wormplot.FUN(wormplot.stat, "ecol_grp_biomass_2021", "2021")
 
 print(ecol_grp_biomass_B)
 
