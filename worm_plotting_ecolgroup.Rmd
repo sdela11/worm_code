@@ -36,8 +36,8 @@ getwd()
 ```{r }
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
-worms <- read.csv("../ItascaEarthwormData_2019.csv") #2019
-#worms <- read.csv("../Itasca_worms_2021.csv") #2021
+worms <- read.csv("../Itasca_Earthworms_2019.csv") #2019
+#worms <- read.csv("../Itasca_Earthworms_2021.csv") #2021
 
 #worms
 
