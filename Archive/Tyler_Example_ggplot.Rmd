@@ -1,0 +1,65 @@
+---
+title: "Example Graphing"
+output: html_document
+date: "2023-04-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+#Set your working directory
+```
+
+```{r}
+### Example of ggplot code for graphs
+
+#For y-axis superscript
+mass_expression <- expression(Leaf ~ litter ~ dry ~ mass ~ (g/0.08~m^2))
+
+#creating bar graph
+af_litter_plot <-ggplot(af_litter_calc) + #Inputing data
+              geom_bar(aes(x = Season, y = mean_mass, fill = Site), position = position_dodge(width=0.72), #bar graph, x axis based on sample timing, y axis on average                                                                                                             mass, fill based on site (Amynthas vs Lumbricus in my case)
+                     colour = "black", size = 0.75, #position dodge to group two bars based on season (could be something like depth in your case)
+                     stat =  'identity', width=0.5, alpha=0.85) +
+             geom_errorbar(aes(x = Season, ymin = mean_mass - stdev_mass, ymax = mean_mass + stdev_mass, group = Site), #adding error bars based on standard deviation
+                           position = position_dodge(width=0.72), width=0.3) + #position dodging the error bars to match the bar's position
+            labs(y = mass_expression, x = "") + #x and y axis labels, using above expression for y axis
+            ggtitle("Acer") + #title label
+            theme_classic() + #lots of themes to choose from
+            theme(text = element_text(size = 35), axis.title.y = element_text(size = 25), axis.title.x = element_text(size = 25), legend.title = element_blank(), 
+                  legend.position="none") + #changing text size, legend with theme
+            annotate("text", x = 4, y = 52.89556, label = c("*"), size = 15) + #adding mark of significance. Can also draw lines/points/text with annotate
+            scale_y_continuous(limits = c(0,225), expand=c(0,0)) + #setting y axis size, setting the graph at 0,0
+            scale_x_discrete(labels = c("10/20", "5/21", "7/21", "10/21")) + #changing x axis labels
+            scale_fill_manual(values = c("A" = "#FFFFFF", #bar fill colors
+                                         "L" = "#808080"), 
+                              labels = c(expression(italic("Amynthas")~"spp."), #changing legend text, adding italics                                    
+                                         expression(italic("Lumbricus")~"spp.")))
+
+png(file = "af_litter_plot.png", width = 600, height = 600, units = 'px') #Printing graph as png, can choose size of graph here
+print(af_litter_plot)
+```
+
+```{r}
+#Combining graphs using ggarrange
+
+litter_combine_plot <- ggarrange(af_litter_plot, #first plot (from above)
+          mf_litter_plot + #second plot, identical to the first one except different data, has the x axis label in it because it is the center graph of the arrange
+                    theme(axis.text.y = element_blank(), #removing y axis labels from this graph, I did not want more than one y axis label
+                     axis.ticks.y = element_blank(),
+                     axis.title.y = element_blank() ) , 
+          wdf_litter_plot + #third plot, identical to the first one with different data
+                    theme(axis.text.y = element_blank(), #removing y axis labels from this graph, I did not want more than one y axis label
+                     axis.ticks.y = element_blank(),
+                     axis.title.y = element_blank()),
+          widths = c(1, 0.86, 0.86), #changing widths to be equal
+          common.legend = TRUE, legend = "bottom", #shared legend, legend position
+          nrow = 1) #number of rows
+
+png(file = "litter_combine_plot.png", width = 1400, height = 500, units = "px") #printing combined graph, can again choose size here
+print(litter_combine_plot)
+
+```
