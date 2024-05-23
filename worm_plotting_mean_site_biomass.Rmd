@@ -1,10 +1,10 @@
 ---
 title: "worm plotting total site biomass"
 author: "Sara DeLaurentis"
-date: "1/15/2022"
+date: "5/22/2024"
 output: html_document
 purpose: create summarized worm data, take mean biomass of 3 reps at each site, calculate SD and SE, plot
-related files: worm_plotting_20211027.Rmd
+files needed: Itasca_earthworms_2019.csv, Itasca_earthworms_2021.csv
 ---
 
 ```{r setup, include=FALSE}
@@ -48,8 +48,8 @@ IMPORTANT:
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 
-#worms <- read.csv("../ItascaEarthwormData_2019.csv") #2019
-worms <- read.csv("../Itasca_worms_2021.csv") #2021
+#worms <- read.csv("../Itasca_earthworms_2019.csv") #2019
+worms <- read.csv("../Itasca_earthworms_2021.csv") #2021
 
 ```
 
