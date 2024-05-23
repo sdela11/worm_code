@@ -1,14 +1,16 @@
 ---
 title: "worm_plot_ecolgrp_by_site"
 author: "Sara DeLaurentis"
-date: "1/15/2022"
+date: "05/22/2024"
 output: html_document
-related files: worm_plotting_20211027.Rmd, worm_plotting_mean_site_biomass.Rmd
+purpose: Plot earthworm biomass by ecological group
+files needed: Itasca_Earthworms_2019.csv, Itasca_Earthworms_2021.csv
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 
 ```{r }
 library(tidyverse)
@@ -31,9 +33,16 @@ getwd()
 
 ```
 
+## INSTRUCTIONS FOR USE
+
+You will analyze one year of data at a time and create a graph for each year. Then, you will use ggarrange to create the combined plot with both years.
+
+1. To do this Use Ctrl + F: "2019" to activate all lines of code with a #2019 next to it. Make sure to deactivate the line with #2021.
+
+
 ##Import data from csv, summarize by site and ecol_group.
 
-```{r }
+```{r data read-in}
 #setwd("C:/Users/sbaue/coding/R_TEMPRY/Itasca_project_19-21")
 
 worms <- read.csv("../Itasca_Earthworms_2019.csv") #2019
@@ -45,7 +54,7 @@ worms <- read.csv("../Itasca_Earthworms_2019.csv") #2019
 
 ## FOR 2021 WORMS ONLY ##
 
-```{r }
+```{r 2021 worms only}
 
 worms <- worms %>% 
   mutate(rep = case_when(
@@ -85,6 +94,7 @@ worms.org.musEX
 
 ```
 
+#Start here for 2019 earthworms
 
 ```{r }
 #For ecogroup plot (site mean):
@@ -110,7 +120,7 @@ keeps <- c("site", "rep", "treatment", "forest_type", "inv_lvl", "ecol_group", "
 worm_rep_sum = worm_rep_sum[keeps]
 #view(worm_rep_sum)  
 
-
+#OLD CODE
 #worm_rep_ecogrp %<>%
 #  group_by(site, ecol_group) %>% 
 #  summarise(biomass_eco_m2 = mean(biomass_m2)) %>% 
